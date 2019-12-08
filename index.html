@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Transitive by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
 <html>
 	<head>
 		<title>CS109a Crime</title>
@@ -15,36 +10,51 @@
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<div class="logo"><a href="index.html">Crime <span> CS109a: Introduction to Data Science</span></a></div>
+				<div class="logo"><a href="index.html">Crime Prediction<span> CS109a: Introduction to Data Science</span></a></div>
 				<a href="#menu" class="toggle"><span>Menu</span></a>
 			</header>
 
 		<!-- Nav -->
 			<nav id="menu">
 				<ul class="links">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="generic.html">Generic</a></li>
-					<li><a href="elements.html">Elements</a></li>
+					<li><a href="#">Home</a></li>
+					<li><a href="#question">Research Question(s)</a></li>
+					<li><a href="#data_cleaning">Data Cleaning</a></li>
+					<li><a href="#eda">Exploratory Data Analysis</a></li>
+					<li><a href="#model_building">Model Building</a></li>
+					<li><a href="#results">Results</a></li>
 				</ul>
 			</nav>
 
-		<!-- Banner -->
-		<!--
-			To use a video as your background, set data-video to the name of your video without
-			its extension (eg. images/banner). Your video must be available in both .mp4 and .webm
-			formats to work correctly.
-		-->
 			<section id="banner" data-video="images/banner">
 				<div class="inner">
-					<h1>Crime</h1>
+					<h1>Crime Prediction</h1>
 					<p>by Nicolas Lepore, Natalie Margulies, Daphne Kaxiras, and Wes De Silvestro<br />
 					Hosted by <a href="https://github.com/nlepore33/finalproject">GitHub</a>.</p>
-					<a href="#one" class="button special scrolly">Get Started</a>
+					<a href="#question" class="button special scrolly">Explore Our Project</a>
 				</div>
 			</section>
 
+		<section id="question" class="wrapper style2">
+			<div class="inner">
+				<div>
+					<div class="box">
+						<!--						<div class="image fit">-->
+						<!--							<img src="images/pic01.jpg" alt="" />-->
+						<!--						</div>-->
+						<div class="content">
+							<header class="align-center">
+								<h2>RESEARCH QUESTION(s)</h2>
+								<p>TODO</p>
+							</header>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
 		<!-- One -->
-			<section id="one" class="wrapper style2">
+			<section id="data_cleaning" class="wrapper style2">
 				<div class="inner">
 					<div>
 						<div class="box">
@@ -57,15 +67,41 @@
 									<p>First, we cleaned our data to create a foundation.</p>
 								</header>
 								<hr />
-								<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-								<p>Vivamus fermentum nibh vel pharetra blandit. Cras a purus urna. Sed et libero ex. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse id hendrerit felis. Nulla viverra tempor dui at congue. Pellentesque quis nulla ornare, congue nisi id, finibus nulla. Aliquam sit amet hendrerit purus. Donec libero massa, posuere fermentum eros sit amet, maximus fringilla augue. Maecenas at rhoncus lorem. Vivamus ultricies consequat est, efficitur convallis libero. Vivamus rutrum semper mauris, vitae consequat eros tempor ac. Pellentesque et ornare sapien</p>
+								<p> We first dropped rows with a substantial amount of missing data, since these would not help us.</p>
+								<p>
+									Next, we looked for ways to create a master dataframe with which we could train and test our model.
+									To do this, we had to combine many CSVs by certain indices. The data sets were very large, so we sampled
+									from some of them to make certain processes faster, without giving up the integrity of the data.
+								</p>
+								<p>
+									One issue was that the crime reports gave location in terms of longitude and latitude.
+									To combine closest property value with crime, we had to use geocoding, which is the
+									process of converting addresses to longitude and latitude. Once the property addresses
+									were converted into longitude and latitude, we then found the average neighborhood property value to a given
+									crime. This was computationally difficult since we needed to test many properties for each crime
+									to achieve this, but once we did it one time, we could save that CSV for future use.
+								</p>
+								<p>
+									We followed a similar technique to find how far away the closest streetlight was to the crime.
+									Using the coordinates of the streetlights, we found how far away the closest streetlight was
+									to a crime by converting from coordinate Euclidean distance to a familiar distance metric.
+									Again, this was computationally taxing, but only needed to be performed once.
+								</p>
+								<p>
+									Next we looked at weather for each day in Boston, to see if it affected type of crime.
+									We took the average temperature, precipitation amount, and snow amount to see whether there
+									was a relationship.
+								</p>
+								<p>
+									We used these features to predict the UCR severity, which points back to our initial question.
+								</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 
-		<section id="one2" class="wrapper style2">
+		<section id="eda" class="wrapper style2">
 			<div class="inner">
 				<div>
 					<div class="box">
@@ -75,127 +111,83 @@
 						<div class="content">
 							<header class="align-center">
 								<h2>Exploratory Data Analysis (EDA)</h2>
-								<p>We then got a better understanding of our data.</p>
+								<p>Then, we conducted EDA to better understand the data and how we might want to approach the model-building process.</p>
 							</header>
 							<hr />
 							<div class="image left">
 								<img src="images/streetlamps_boston.png" alt="" />
 							</div>
 
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p>Vivamus fermentum nibh vel pharetra blandit. Cras a purus urna. Sed et libero ex. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse id hendrerit felis. Nulla viverra tempor dui at congue. Pellentesque quis nulla ornare, congue nisi id, finibus nulla. Aliquam sit amet hendrerit purus. Donec libero massa, posuere fermentum eros sit amet, maximus fringilla augue. Maecenas at rhoncus lorem. Vivamus ultricies consequat est, efficitur convallis libero. Vivamus rutrum semper mauris, vitae consequat eros tempor ac. Pellentesque et ornare sapien</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
+							<p>As previously mentioned, we're concerned with two types of data to better understand and predict crime: 1) location data and 2) economic data. We began our analysis by looking at location data to better understand the relationship between crime and its location in Boston.</p>
+							<p>We plotted the location of all street lamps in Boston which can be seen in the image to the left. We were interested in seeing if there were any anomalies, such as areas that might have data missing about nearby street lamps. Comparing this image to other maps of Boston that we have seen before, the dataset appears to be comprehensive and the street lamps distributed as we might expect. </p>
+							<p> The street lamps are clearly placed in a grid-like pattern throughout Boston which makes sense given the way urban planners typically construct neighborhoods. We see very few street lights in the top right of the map. This makes sense as this is not residential land but is part of the Boston Logan Airport. We'll want to be careful when analyzing crime in this area as the lack of street lamps might throw off the association we're investigating.</p>
 							<div class="image left">
 								<img src="images/shootings_boston.png" alt="" />
 							</div>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
+							<p>Next, we wanted to continue to investigate location data, but specifically through the lens of where crimes are happening in the city. We constructed another map of one of our datasets, this time plotting incidents of crime in Boston. We chose to color code the map to differentiate between the most egregious crimes (i.e., shootings) and all other forms of crime. We've colored non-shootings in blue and shootings in red. We intentionally chose this binary distinction because shootings were the most commonly reported crime in the news, and thus the most interesting/relevant to map.</p>
+							<p>The plot shows us what we might expect: incidents of crime are correlated with population density. Thus, the more populated areas of Boston in its center sees more crime than the outskirts. The shootings appear to be distributed almost entirely in downtown, urban areas of Boston. We also see that there are pockets of areas in the city that experience no crime whatsoever. We investigated each of these to ensure this was not a problem with our plot or the dataset itself. We found that many of these areas are industrial centers or non-residential areas, such as factories or the Boston Logan airport. Thus, it's plausible no crimes took place here or at least they were perhaps reported offsite once not on these premises.</p>
 							<div class="image left">
 								<img src="images/commoncrime.png" alt="" />
 							</div>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
+							<p>Our crime incidents dataset features markers for the different types of crime that ocurred. We constructed a bar plot of these categories to the left so we could better understand the types of crime that occur in Boston and the data we have available to work with.</p>
+							<p>As we might expect, the most common type of crime is one that is not a crime at all: police responding to sick/injured individuals after a 911 call is placed. We were surprised to find that arrests of suspects and property damage caused by motor vehicles where the driver left the scene are the next two most common forms of crime. Overall, the majority of crimes are non-violent, such as theft and larceny.</p>
+							<p>The histogram shows that there are quite a few incidents of vandalism that occurred in the City. We're interested in investigating the relationship between vandalism and the presence of street lights, so we having a large sample of these crimes to model off of is very helpful.</p>
 							<div class="image left">
 								<img src="images/propval.png" alt="" />
 							</div>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-							<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-
+							<p>We performed a variety of other EDA tasks, but the last one we want to share is regarding property values, the second type of data we explored in our analysis. We created a histogram (seen on the left) of property values in Boston to better understand the distribution of property values throughout the city.</p>
+							<p>We find that property values are not distributed normally in Boston. The distribution is right-skewed with many extremely expensive properties pulling the average up, well beyond the mean. The plot also appears to be somewhat bimodal, with a second peak at the lower end of the distribution where a number of lower value properties are recorded. The range overall is quite remarkable: some properties are worth as much as $2 billion. The majority of the values are under $2 million though, which is in line with what we'd expect.</p>
+							<p>Overall, the EDA process was extremely helpful for us in better understanding our data and its limitations. We were able to use this analysis to inform how we approach the model-building process and could then better understand where our models might fail.</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<!-- Two -->
-<!--			<section id="two" class="wrapper style3">-->
-<!--				<div class="inner">-->
-<!--					<div id="flexgrid">-->
-<!--						<div>-->
-<!--							<header>-->
-<!--								<h3>Tempus Feugiat</h3>-->
-<!--							</header>-->
-<!--							<p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu</p>-->
-<!--							<ul class="actions">-->
-<!--								<li><a href="#" class="button alt">Learn More</a></li>-->
-<!--							</ul>-->
-<!--						</div>-->
-<!--						<div>-->
-<!--							<header>-->
-<!--								<h3>Aliquam Nulla</h3>-->
-<!--							</header>-->
-<!--							<p>Ut convallis, sem sit amet interdum consectetuer, odio augue aliquam leo, nec dapibus tortor nibh sed </p>-->
-<!--							<ul class="actions">-->
-<!--								<li><a href="#" class="button alt">Learn More</a></li>-->
-<!--							</ul>-->
-<!--						</div>-->
-<!--						<div>-->
-<!--							<header>-->
-<!--								<h3>Sed Magna</h3>-->
-<!--							</header>-->
-<!--							<p>Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vehicula.</p>-->
-<!--							<ul class="actions">-->
-<!--								<li><a href="#" class="button alt">Learn More</a></li>-->
-<!--							</ul>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</section>-->
-
-		<!-- Three -->
-			<section id="three" class="wrapper style2">
-				<div class="inner">
-					<div class="grid-style">
-
-						<div>
-							<div class="box">
-								<div class="image fit">
-									<img src="images/pic02.jpg" alt="" />
-								</div>
-								<div class="content">
-									<header class="align-center">
-										<h2>Lorem ipsum dolor</h2>
-										<p>maecenas feugiat ex purus, quis volutpat lacus placerat</p>
-									</header>
-									<hr />
-									<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-								</div>
-							</div>
+		<section id="model_building" class="wrapper style2">
+			<div class="inner">
+				<div>
+					<div class="box">
+						<!--						<div class="image fit">-->
+						<!--							<img src="images/pic01.jpg" alt="" />-->
+						<!--						</div>-->
+						<div class="content">
+							<header class="align-center">
+								<h2>MODEL BUILDING</h2>
+								<p>TODO</p>
+							</header>
 						</div>
-
-						<div>
-							<div class="box">
-								<div class="image fit">
-									<img src="images/pic03.jpg" alt="" />
-								</div>
-								<div class="content">
-									<header class="align-center">
-										<h2>Vestibulum sit amet</h2>
-										<p>mattis sapien pretium tellus venenatis</p>
-									</header>
-									<hr />
-									<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
-								</div>
-							</div>
-						</div>
-
 					</div>
 				</div>
-			</section>
+			</div>
+		</section>
+
+		<section id="results" class="wrapper style2">
+			<div class="inner">
+				<div>
+					<div class="box">
+						<!--						<div class="image fit">-->
+						<!--							<img src="images/pic01.jpg" alt="" />-->
+						<!--						</div>-->
+						<div class="content">
+							<header class="align-center">
+								<h2>RESULTS</h2>
+								<p>TODO</p>
+							</header>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
 		<!-- Four -->
-			<section id="four" class="wrapper style3">
+			<section id="bottom" class="wrapper style3">
 				<div class="inner">
 
 					<header class="align-center">
-						<h2>Morbi interdum mollis sapien</h2>
-						<p>Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada. Praesent in sem ex. Morbi mattis sapien pretium tellus venenatis, at egestas urna ornare.</p>
+						<h2>CS109A Final Project</h2>
+						<p>by Nicolas Lepore, Natalie Margulies, Daphne Kaxiras, and Wes De Silvestro
+						</p>
 					</header>
 
 				</div>
@@ -204,45 +196,8 @@
 		<!-- Footer -->
 			<footer id="footer" class="wrapper">
 				<div class="inner">
-					<section>
-						<div class="box">
-							<div class="content">
-								<h2 class="align-center">Get in Touch</h2>
-								<hr />
-								<form action="#" method="post">
-									<div class="field half first">
-										<label for="name">Name</label>
-										<input name="name" id="name" type="text" placeholder="Name">
-									</div>
-									<div class="field half">
-										<label for="email">Email</label>
-										<input name="email" id="email" type="email" placeholder="Email">
-									</div>
-									<div class="field">
-										<label for="dept">Department</label>
-										<div class="select-wrapper">
-											<select name="dept" id="dept">
-												<option value="">- Category -</option>
-												<option value="1">Manufacturing</option>
-												<option value="1">Shipping</option>
-												<option value="1">Administration</option>
-												<option value="1">Human Resources</option>
-											</select>
-										</div>
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="6" placeholder="Message"></textarea>
-									</div>
-									<ul class="actions align-center">
-										<li><input value="Send Message" class="button special" type="submit"></li>
-									</ul>
-								</form>
-							</div>
-						</div>
-					</section>
 					<div class="copyright">
-						&copy; Untitled Design: <a href="https://templated.co/">TEMPLATED</a>. Images <a href="https://unsplash.com/">Unsplash</a>. Video <a href="http://coverr.co/">Coverr</a>.
+						&copy; Design from: <a href="https://templated.co/">TEMPLATED</a>. Images <a href="https://unsplash.com/">Unsplash</a>. Video <a href="http://coverr.co/">Coverr</a>.
 					</div>
 				</div>
 			</footer>
