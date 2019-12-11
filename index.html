@@ -212,70 +212,101 @@
 									theft, vandalism, mv accident, violent, burglary, possession weapons,
 									domestic, petty theft, medical, drugs, and civil disruption.
 								</p>
-								<p>
-									Master Dataset Columns:
-								</p>
-								<p>
-									Lat: latitude of crime incident
-								</p>
-								<p>
-									Long: longitude of crime incident
-								</p>
-								<p>
-									Month: month of crime incident
-								</p>
-								<p>
-									Day_of_Week: day of the week of crime incident
-								</p>
-								<p>
-									Hour: hour of the day of crime incident
-								</p>
-								<p>
-									TAvg: average temperature for the day of crime incident
-								</p>
-								<p>
-									Prcp: precipitation amount for the day of crime incident
-								</p>
-								<p>
-									Snow: snow amount for the day of crime incident
-								</p>
-								<p>
-									Closest_property_value: value of the closest property
-								</p>
-								<p>
-									Neighborhood_avg: average neighborhood property value
-								</p>
-								<p>
-									Lamp_min_dist: distance to the nearest streetlight
-								</p>
-								<p>
-									Lamp_density: density of streetlights 0.01 degrees around the crime incident
-								</p>
-								<p>
-									Police_min_dist: distance to the nearest police station
-								</p>
-								<p>
-									Police_density: density of police stations 0.01 degrees around the crime incident
-								</p>
-								<p>
-									Hospital_min_dist: distance to the nearest hospital
-								</p>
-								<p>
-									Hospital_density: density of hospitals 0.01 degrees around the crime incident
-								</p>
-								<p>
-									School_min_dist: distance to the nearest school
-								</p>
-								<p>
-									School_density: density of school 0.01 degrees around the crime incident
-								</p>
-								<p>
-									Shooting: whether the crime incident was a shooting or not
-								</p>
-								<p>
-									Category: our response variable, the category of crime (theft, vandalism, mv accident,
-									violent, burglary, possession weapons, domestic, petty theft, medical, drugs, and civil disruption)
-								</p>
+
+								<h4>Master Dataset Columns:</h4>
+								<div class="table-wrapper">
+									<table>
+										<thead>
+										<tr>
+											<th>Column</th>
+											<th>Description</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr>
+											<td>Lat</td>
+											<td>latitude of crime incident</td>
+										</tr>
+										<tr>
+											<td>Long</td>
+											<td>longitude of crime incident</td>
+										</tr>
+										<tr>
+											<td>Month</td>
+											<td>month of crime incident</td>
+										</tr>
+										<tr>
+											<td>Day_of_Week</td>
+											<td>day of the week of crime incident</td>
+										</tr>
+										<tr>
+											<td>Hour</td>
+											<td>hour of the day of crime incident</td>
+										</tr>
+										<tr>
+											<td>TAvg</td>
+											<td>average temperature for the day of crime incident</td>
+										</tr>
+										<tr>
+											<td>Prcp</td>
+											<td>precipitation amount for the day of crime incident</td>
+										</tr>
+										<tr>
+											<td>Snow</td>
+											<td>snow amount for the day of crime incident</td>
+										</tr>
+										<tr>
+											<td>Closest_property_value</td>
+											<td>value of the closest property</td>
+										</tr>
+										<tr>
+											<td>Neighborhood_avg</td>
+											<td>average neighborhood property value</td>
+										</tr>
+										<tr>
+											<td>Lamp_min_dist</td>
+											<td>distance to the nearest streetlight</td>
+										</tr>
+										<tr>
+											<td>Lamp_density</td>
+											<td>density of streetlights 0.01 degrees around the crime incident</td>
+										</tr>
+										<tr>
+											<td>Police_min_dist</td>
+											<td>distance to the nearest police station</td>
+										</tr>
+										<tr>
+											<td>Police_density</td>
+											<td>density of police stations 0.01 degrees around the crime incident</td>
+										</tr>
+										<tr>
+											<td>Hospital_min_dist</td>
+											<td>distance to the nearest hospital</td>
+										</tr>
+										<tr>
+											<td>Hospital_density</td>
+											<td>density of hospitals 0.01 degrees around the crime incident</td>
+										</tr>
+										<tr>
+											<td>School_min_dist</td>
+											<td>distance to the nearest school</td>
+										</tr>
+										<tr>
+											<td>School_density</td>
+											<td>density of school 0.01 degrees around the crime incident</td>
+										</tr>
+										<tr>
+											<td>Shooting</td>
+											<td>whether the crime incident was a shooting or not</td>
+										</tr>
+										<tr>
+											<td>Category</td>
+											<td>our response variable, the category of crime (theft, vandalism, mv accident,
+												violent, burglary, possession weapons, domestic, petty theft, medical, drugs, and civil disruption)</td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -347,11 +378,18 @@
 								2. Implementing a Decision Tree.
 							</p>
 							<p>
-								3. Using latitude and longitude for K-Means Clustering to create pseudo neighborhoods, to
-								see if proximity affected the crime.
+								3. Implementing a Neural Network. Using 3 dense hidden layers of 100 nodes each, we were
+								able to get roughly 70% validation accuracy (which can be found in our notebooks).
+								But as our TF warned, this method is not well suited to the problem: between running the network,
+								accuracies would change dramatically.
 							</p>
 							<p>
-								4. Testing for different maximum depths of a Random Forest.
+								4. Using latitude and longitude for K-Means Clustering to create pseudo neighborhoods, to
+								see if proximity affected the crime.
+							</p>
+
+							<p>
+								5. Testing for different maximum depths of a Random Forest.
 							</p>
 							<p>
 								TODO
@@ -381,6 +419,14 @@
 							<p>
 								Our naive accuracy by just predicting the most common category, theft, is about 17%.
 							</p>
+							<p>
+								After augmenting our training data with all of our added features, and using a Random Forest
+								of optimal depth 15, we can bring this up to roughly 28% accuracy. Important features
+								include police_min_dist, Lat and Long, school_min_dist, hospital_min_dist, and hour.
+							</p>
+							<div class="image center">
+								<img src="images/rfcv.png" alt="" />
+							</div>
 						</div>
 					</div>
 				</div>
