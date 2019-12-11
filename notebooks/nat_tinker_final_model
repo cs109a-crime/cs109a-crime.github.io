@@ -1,0 +1,541 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Final Model Development\n",
+    "\n",
+    "After examinig at classification trees, b"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import warnings\n",
+    "import matplotlib.pyplot as plt\n",
+    "warnings.filterwarnings('ignore')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "from scipy.stats import ttest_ind\n",
+    "pd.set_option('display.max_columns', 25)\n",
+    "\n",
+    "from sklearn.linear_model import LinearRegression\n",
+    "from sklearn.linear_model import LogisticRegression\n",
+    "from sklearn.linear_model import LogisticRegressionCV\n",
+    "from sklearn.linear_model import LassoCV\n",
+    "\n",
+    "from sklearn.neighbors import KNeighborsClassifier\n",
+    "from sklearn.model_selection import cross_val_score\n",
+    "from sklearn.metrics import accuracy_score\n",
+    "from sklearn.model_selection import KFold\n",
+    "from sklearn.preprocessing import MinMaxScaler\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "from sklearn.decomposition import PCA\n",
+    "from sklearn import metrics\n",
+    "\n",
+    "from sklearn import tree\n",
+    "from sklearn.tree import DecisionTreeClassifier\n",
+    "from sklearn.ensemble import RandomForestClassifier\n",
+    "from sklearn.ensemble import AdaBoostClassifier\n",
+    "from sklearn.linear_model import LogisticRegressionCV\n",
+    "from sklearn.model_selection import KFold\n",
+    "from sklearn.metrics import confusion_matrix\n",
+    "from sklearn.model_selection import cross_val_score\n",
+    "from sklearn.metrics import accuracy_score\n",
+    "import matplotlib\n",
+    "import matplotlib.pyplot as plt\n",
+    "%matplotlib inline\n",
+    "\n",
+    "import statsmodels.api as sm\n",
+    "from statsmodels.api import OLS\n",
+    "\n",
+    "import seaborn as sns\n",
+    "sns.set()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn import tree\n",
+    "%matplotlib inline\n",
+    "\n",
+    "import seaborn as sns\n",
+    "pd.set_option('display.width', 1500)\n",
+    "pd.set_option('display.max_columns', 100)\n",
+    "\n",
+    "from sklearn.utils import shuffle"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 78,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "master = pd.read_csv('data/crimes_nat_tinker.csv')\n",
+    "master = pd.get_dummies(master, columns=[\"DAY_OF_WEEK\"])\n",
+    "master = master.dropna(how='any',axis=0) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 79,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>Unnamed: 0.1</th>\n",
+       "      <th>Lat</th>\n",
+       "      <th>Long</th>\n",
+       "      <th>MONTH</th>\n",
+       "      <th>HOUR</th>\n",
+       "      <th>TAVG</th>\n",
+       "      <th>PRCP</th>\n",
+       "      <th>SNOW</th>\n",
+       "      <th>closest_property_value</th>\n",
+       "      <th>neighborhood_avg</th>\n",
+       "      <th>lamp_min_dist</th>\n",
+       "      <th>lamp_density</th>\n",
+       "      <th>SHOOTING</th>\n",
+       "      <th>category</th>\n",
+       "      <th>police_min_dist</th>\n",
+       "      <th>police_density</th>\n",
+       "      <th>hospital_min_dist</th>\n",
+       "      <th>hospital_density</th>\n",
+       "      <th>school_min_dist</th>\n",
+       "      <th>school_density</th>\n",
+       "      <th>DAY_OF_WEEK_Friday</th>\n",
+       "      <th>DAY_OF_WEEK_Monday</th>\n",
+       "      <th>DAY_OF_WEEK_Saturday</th>\n",
+       "      <th>DAY_OF_WEEK_Sunday</th>\n",
+       "      <th>DAY_OF_WEEK_Thursday</th>\n",
+       "      <th>DAY_OF_WEEK_Tuesday</th>\n",
+       "      <th>DAY_OF_WEEK_Wednesday</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>42.259518</td>\n",
+       "      <td>-71.121563</td>\n",
+       "      <td>10</td>\n",
+       "      <td>9</td>\n",
+       "      <td>59.0</td>\n",
+       "      <td>0.00</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>454000.0</td>\n",
+       "      <td>4.406696e+05</td>\n",
+       "      <td>0.001234</td>\n",
+       "      <td>563.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>theft</td>\n",
+       "      <td>0.004067</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.041388</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.004665</td>\n",
+       "      <td>4.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>42.262092</td>\n",
+       "      <td>-71.116710</td>\n",
+       "      <td>10</td>\n",
+       "      <td>20</td>\n",
+       "      <td>56.0</td>\n",
+       "      <td>0.01</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>541300.0</td>\n",
+       "      <td>4.528877e+05</td>\n",
+       "      <td>0.000539</td>\n",
+       "      <td>531.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>theft</td>\n",
+       "      <td>0.009414</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.036018</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.001244</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <td>2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>42.352375</td>\n",
+       "      <td>-71.135096</td>\n",
+       "      <td>10</td>\n",
+       "      <td>15</td>\n",
+       "      <td>56.0</td>\n",
+       "      <td>0.01</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>259900.0</td>\n",
+       "      <td>5.895101e+05</td>\n",
+       "      <td>0.000167</td>\n",
+       "      <td>1272.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>theft</td>\n",
+       "      <td>0.015767</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.010692</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.002624</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>42.349476</td>\n",
+       "      <td>-71.076402</td>\n",
+       "      <td>10</td>\n",
+       "      <td>4</td>\n",
+       "      <td>56.0</td>\n",
+       "      <td>0.01</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>492000.0</td>\n",
+       "      <td>1.666753e+06</td>\n",
+       "      <td>0.000074</td>\n",
+       "      <td>4461.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>theft</td>\n",
+       "      <td>0.012329</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.012304</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.001918</td>\n",
+       "      <td>6.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "      <td>42.381846</td>\n",
+       "      <td>-71.066551</td>\n",
+       "      <td>10</td>\n",
+       "      <td>8</td>\n",
+       "      <td>71.0</td>\n",
+       "      <td>0.22</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>836900.0</td>\n",
+       "      <td>6.054951e+05</td>\n",
+       "      <td>0.000108</td>\n",
+       "      <td>2672.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>theft</td>\n",
+       "      <td>0.011801</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.016170</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.002848</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0  Unnamed: 0.1        Lat       Long  MONTH  HOUR  TAVG  PRCP  SNOW  closest_property_value  neighborhood_avg  lamp_min_dist  lamp_density  SHOOTING category  police_min_dist  police_density  hospital_min_dist  hospital_density  school_min_dist  school_density  DAY_OF_WEEK_Friday  DAY_OF_WEEK_Monday  DAY_OF_WEEK_Saturday  DAY_OF_WEEK_Sunday  DAY_OF_WEEK_Thursday  DAY_OF_WEEK_Tuesday  DAY_OF_WEEK_Wednesday\n",
+       "0           0             0  42.259518 -71.121563     10     9  59.0  0.00   0.0                454000.0      4.406696e+05       0.001234         563.0         0    theft         0.004067             1.0           0.041388               0.0         0.004665             4.0                   0                   0                     0                   1                     0                    0                      0\n",
+       "1           1             1  42.262092 -71.116710     10    20  56.0  0.01   0.0                541300.0      4.528877e+05       0.000539         531.0         0    theft         0.009414             1.0           0.036018               0.0         0.001244             3.0                   0                   0                     1                   0                     0                    0                      0\n",
+       "2           2             2  42.352375 -71.135096     10    15  56.0  0.01   0.0                259900.0      5.895101e+05       0.000167        1272.0         0    theft         0.015767             0.0           0.010692               0.0         0.002624             3.0                   0                   0                     1                   0                     0                    0                      0\n",
+       "3           3             3  42.349476 -71.076402     10     4  56.0  0.01   0.0                492000.0      1.666753e+06       0.000074        4461.0         0    theft         0.012329             0.0           0.012304               0.0         0.001918             6.0                   0                   0                     1                   0                     0                    0                      0\n",
+       "4           4             4  42.381846 -71.066551     10     8  71.0  0.22   0.0                836900.0      6.054951e+05       0.000108        2672.0         0    theft         0.011801             0.0           0.016170               0.0         0.002848             3.0                   0                   0                     0                   0                     0                    0                      1"
+      ]
+     },
+     "execution_count": 79,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "master.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 80,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X, y = master.drop(['category', 'Unnamed: 0', 'Unnamed: 0.1'], axis=1), master['category']\n",
+    "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+    "#train, test = train_test_split(master, test_size=0.2, random_state=42)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Fit Random Forrest"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The best depth was found to be: 15\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Find optimal depth of trees\n",
+    "mean_CV_acc = {}\n",
+    "all_CV_acc = {}\n",
+    "tree_depth_start, tree_depth_end, steps = 3, 20, 4\n",
+    "for i in range(tree_depth_start, tree_depth_end, steps):\n",
+    "    model = DecisionTreeClassifier(max_depth=i)\n",
+    "    score = cross_val_score(estimator=model, X=X_train, y=y_train, cv=5, n_jobs=-1)\n",
+    "    all_CV_acc[i] = score\n",
+    "    mean_CV_acc[i] = score.mean()\n",
+    "    \n",
+    "best_depth = sorted(mean_CV_acc, key=mean_CV_acc.get, reverse=True)[0]\n",
+    "print(\"The best depth was found to be:\", best_depth)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Random Forest: Accuracy, Training Set : 45.25%\n",
+      "Random Forest: Accuracy, Testing Set :  28.52%\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Training\n",
+    "model = RandomForestClassifier(n_estimators=int(X_train.shape[1]/2), max_depth=best_depth)\n",
+    "model.fit(X_train, y_train)\n",
+    "\n",
+    "#Predict\n",
+    "y_pred_train = model.predict(X_train)\n",
+    "y_pred_test = model.predict(X_test)\n",
+    "\n",
+    "#Perfromance Evaluation\n",
+    "acc_random_forest_training = accuracy_score(y_train, y_pred_train)*100\n",
+    "acc_random_forest_testing = accuracy_score(y_test, y_pred_test)*100\n",
+    "\n",
+    "print(\"Random Forest: Accuracy, Training Set : {:0.2f}%\".format(acc_random_forest_training))\n",
+    "print(\"Random Forest: Accuracy, Testing Set :  {:0.2f}%\".format(acc_random_forest_testing))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 83,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Counter({'drugs': 12640,\n",
+       "         'domestic': 62244,\n",
+       "         'violent': 21331,\n",
+       "         'theft': 58408,\n",
+       "         'petty theft': 14127,\n",
+       "         'medical': 11177,\n",
+       "         'vandalism': 5551,\n",
+       "         'mv accident': 8546,\n",
+       "         'civil disruption': 1601,\n",
+       "         'burglary ': 882,\n",
+       "         'possession weapons': 420})"
+      ]
+     },
+     "execution_count": 83,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import collections, numpy\n",
+    "collections.Counter(y_pred_train)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 65,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "theft                 41867\n",
+       "domestic              37742\n",
+       "violent               33606\n",
+       "medical               27298\n",
+       "vandalism             23527\n",
+       "mv accident           22040\n",
+       "petty theft           22006\n",
+       "drugs                 19463\n",
+       "burglary               9311\n",
+       "possession weapons     4972\n",
+       "civil disruption       4327\n",
+       "Name: category, dtype: int64"
+      ]
+     },
+     "execution_count": 65,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "master['category'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 86,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<matplotlib.axes._subplots.AxesSubplot at 0x1c21694310>"
+      ]
+     },
+     "execution_count": 86,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "iVBORw0KGgoAAAANSUhEUgAAAdgAAAEJCAYAAAA3uzYTAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjEsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy8QZhcZAAAgAElEQVR4nO3deZgcVdn+8e8kILusEQkKE1lufiAYEGSXABo1IAERkEV2MCrgqwivYsQoKCBGREQUCQmbIAgRgwHZElH2BEIIy/MiJChGBIZgEiCBkPn9cc6EppmZnpl0zXR37s915aKn6tSp51Q39fQ5VV2nqbW1FTMzM6uufn0dgJmZWSNygjUzMyuAE6yZmVkBnGDNzMwK4ARrZmZWACdYMzOzAizX1wGYFUXSJODPEXF22fKTgY9HxPBu1PUD4O8RcXknZY4EPh8Re7ezbjLwi4j4fTf2OQ6YERE/6eo21SBpEPCTiNi/N/dbFsMo4KvAv/KiJuC9wHjg5Iioyu8LJc0AToiIydWor6zuWcBC4PWSxbMjYli191W23w7fv/yZOgLYIyImlSxvBp4BfhkRJ3RjX9sCv4+I5grlJtPNz38jcIK1RvZL4IfA2WXLjwNO6k5FEXF6tYKqAxsC6usggN+VnuwlrQlMB/6c/9WDQyNiSi/vs9L79w/gi8CkkmWHAy8UGdSyyAnWGtl44GeSdo2IvwJI2o3UG7pNUj/gPGAHYLW8/NiIuDt/018L2Ai4CViX3JuUdDTwJeA9uczZEXFR3ud6km4BBgLPAsdFxPOlQUnaCTgHWAV4C/h+RNzUWUNyD2BqjvV9wMXA+4Hdcj0HRsSjudxDwC7AOsAVEfG9XMe+wPdIl4bmAd+IiAdyb3HHHPMMYDtgfUl/johPSToNGA6slPf1zYgYn7drBtYjndT/BRwWEf+WtCnw6xzrYuDMiPidpPWBXwAbAMsD10TEjzpre4l1gZWBObk97b4PeSRhv7zfTYDXgCMi4glJmwOX5nqezO1pO8adHZ+NgPVzW6eSktMRwCDg1Ii4uottaNvXFvk4rA20AqMj4nJJQ4DzgVeBVUnvxVBgZG7na6Tjf6+kzYAxwIqkz+4lpGN+CSXvXzu7vwY4RtJKEdHWuz4IuDa3HUkfAC4ivb9NwGURcW5e92Xg68B/gUfL2vUdYP9czyzgKxExuzvHppH4Gqw1rIhYBPwGOKZk8fGkYbBWYHtSUtkxIjYHLgO+VVJ25YjYIiL+t22BpFVJPeBhEbE16cT045JtNiUNOW5FOvmcXxpT7oWNBb4YEduQEtdFkjboQpOaI2Jn4LC8z8kRsS1wC3Bi6W6AnYFtgIMk7Z1Pxr8C9o+IjwCnAzdKem/eZkNg64g4GDgWeDon1w2BTwBDcpu+A/ygZF+7AgdExGakpDAiL78GuC4itgCGAT/K+7oCuDQiPgp8DPiEpAM7aO9BkqZJekpSC3AB8KWc9Cq9D7sBJ0bEh4H7eft9vQr4TW7L+bnddOH47EJK2tvk9mweER8HTgC+30H8AFflNrT9GyxpOeCPwAU5js/k47Nj3ubDwMF53QbAj0raeTxwg6RVgFOACflYDgM+TkrWS96/DmJ6EbgX2Ce3fRfgCeDl0riBSRGxJemzdJikL0gaDIwiXWLZDnijbQNJhwNbAh+LiMHARFKyX2Y5wVqjuxjYV9JqktYCPgWMA4iIe0k9gy9J+gnweVKvoc3fyiuLiPnA3sBeks4gJZzSbW6PiL/n12OAT5ZVsSOpF/QHSdNIJ6FWYKsutOWG/N+n839vKfl7rZJyv46INyPiFeC63OY9gDsi4pncjjtJQ4Ifzdvcl7+QlLf3WdLw4aGSziYl0NL2To6Iufn1w8Ba+Th/hHxyjYh/RsRGpN76bsAZue33kRLI4A7a+7t8ot4CuJ7Ug56Q66z0PkyNiOfy64dyXGuTjvPluY67ST12unB8bo+I/+Ye32w6PvblDo2IwSX/ppG+hK0YETfkfc3O7ft03uaf+bhD+vysB9yRj9lVpJ75xqQRmlMl3QB8DjgpIhZ3Ekupy0lf1CD1xMe1rcjJe2fgwhzff/P6zwB7AreWjMpcXFLn3qQRlik51hOpjUsNfcYJ1hpaPnndBnyBlCh+n08YSNoL+FMueiOpB9NUsvn88vry0Nk0Us/nb6QEXeqtktf9gDfL1vcHnig96ZJOSl25priwrG3ldbcpTZT9ckz9SYmcsnXL59fvaiuApG1IvZ33AreShrZLj1HpDTyted2ikr/b6hHpklQTsFNZ2zsdIo6IN0g9xdWBtmHKSu9De3G1KX3dFmul47OwbF1Hx74ruvNe9Ccl/vLPy4x8WWET0tDu1sCj+bh0xR+B7SV9kNTzvaVkXT/eeYzK42vv+LXFek5JnNuSEvUyywnWlgUXAoeSvqlfWLL8k6QhtouAKcC+pJNEZ7YlDbGdSUo4ewNIattu95Lh3hHAzWXb3wdsIunjebvBwFOk63vVcpikfnk4+kBSr+8O4FOSPpT3uwfwQdLwablFvH0y/TgwJSJ+CvyFLhyj3KOdSjre5JP43aQe6H3AN/LyNfLyindz5yT7ZeArkram8vvQXh0tOa5jc9ltSEOa0L3js7SeBN6U9Lm8r4Gk65a3tVP2DmBoHsJG0jDSjV4rSfotcFBEXAN8BZhLulZc+v61KyIWknrAl5P+H1hUsm4e6X36at7n6qQvp7eRjvXQkkR+ZEm1fwaOLRlW/wHpksAyywnWGl7+CcbawNyIKL0p41fAEEmPkoYRnwYG5ZufOnIr8BwQpOtWG5BO9Bvn9dOBS/PPPzYgJ5OSWF4knUzPlfQI6QT0xYiYtTRtLLMS8ADpJPnLiLgjIh4nnYRvyLGdDXy2rTdf5nFggaQHgKuBdSQ9kZfPJw23rlYhhkOAA3MbJ5BuHns+L98hH/P7gasj4qquNCoi/kYaIr2QdLLv7H3oyMHAF/L+v5u3pZvHZ6nkkYd9ga9Jmg7cDvwgSn42U1L2cdJ112vysTwD2CcPkZ9BGrp/hHQsxwN3UfL+SSrviZa6HBhCyfBwiUOBPfNxeoB0eWJc/v/nVNKQ9RTSDVZtLiHdEHifpMdIw/FHVj4ijavJ09WZNQ4to783NKtF7sGamZkVwD1YMzOzArgHa2ZmVgAnWDMzswL4UYkGsALpkWz/5p2/4zQzs471Jz0I5EHe/VtpJ1gDUnL9a18HYWZWp3alnSe/OcEapJ4rc+a8yuLFjXXT29prr0pLS7sPKaprjdiuRmwTuF31pjvt6teviTXXXAXyObScE6xBHhZevLi14RIs0JBtgsZsVyO2CdyuetODdrV7ac03OZmZmRXACdbMzKwAHiK2JdZee9XKherQgAGVHptbn/qyXQsWLmLe3NcrFzRbhjnB2hLHnHkrL8zxSdMqmzB6OPP6OgizGucE24skXUiaH/E9pFk/Hs+rzo+IsZJOBEYDG7RNaCzpStLcj2eX1NNEmvll34iYnqfv+iFpbkiAZ4Cv55k4zMysDzjB9qKIaJtfsRmYnCclLnUU8AfgaN6ehPpS4HzS9FltdgFacnLdhDSF2hERMTHXPxyYKEl53kczM+tlvsmpRkjaClgLOAc4rmRO0knAqpK2LCn+RVLiBTgFGNuWXAEi4kbgLKAxLz6amdUBJ9jacTRwbURMBRYBnwKIiFbShMiHAEhaAdibNBE2wA6kSZbfISJ+HREvFR+2mZm1x0PENUDS8sChwNC86FpgBHBz/nscMEnSacA+wJ0R8UpJFUt+FS3pdmAdYHXgWxHxu2Kjt2VVEXcx+47v+uJ2dc4JtjZ8FlgDGC8JYHlgXUkfiIjnIuJZSc8AO5GGh88r2fZB0o1TfwKIiE8ASBoHrNRrLbBlzosvVvc+4gEDVqt6nbXA7aov3WlXv35Nnf680UPEteEoYGRENOd/65MeHH1sSZmx+e9NgMkly88GjpY0rG2BpA8BH8Ez45iZ9Rkn2D4maV1gd2BM2arRwLGS+ue/rweGA7/N12UBiIingD2A4yXNkPR/wDXARcBvi47fzMza5yHiPhARs4Dm/Po/wLvGGCJiAjCh5O8FpLuM26vvcWDfAkI1M7MecoK1JcaMHFq5kBnpUYlm1jknWFuipWV+w00/5RsxzKyv+BqsmZlZAZxgzczMCuAEa2ZmVgAnWDMzswI4wZqZmRXACdbMzKwATrBmZmYFcII1MzMrgBOsmZlZAfwkJ1uis2mX6pnnrKy+BQsXMW/u6322f7N64ARrSxxz5q28MMcnTatswujh+EGNZp2rmyFiSdMqrD8yTzJevnyIpMlLsd9mSbN6un1v12tmZrWhbhJsRAzu6xjMzMy6qs+GiCUNAU4DXgP+H/AocAjwBeB/SMl/KvDViFggqTUimiStDlwObAw8A3wA2C9Xu3HurW4A3BERx+Xl60i6BVgfuD/XuVDS3sCZeV/PAF+KiP/knuX9wGDgi8BKkq4BPgzMAfaNiJZOtt8BOB9YEXgpL/+7pK15e2L1R7pwjNbP5dcABgLjIuJ0SQ8Bx0XE1Dwh+7PANsDmwAXAIuBeYPOIGFJpP2ZmVn19fQ12J2AzYDZwH/Bl4PPATjmpngV8k5TE2pwOREQMl7Rt3q7NBqSk+CrwtKQt8vJBpCT8d+AaYISkq4FfAztHxCxJpwC/AA7I29wcEQdJagYGAD+NiAck/R74gqTr2tte0qF5HwdExIOSDgCuBrYjfTH4RkTcJum7wO4Vjs/BwNURcVn+YvFPST8HrsjrpgJ7kJL1nLx8r4iYLun8CnWbLZUibrLyDWn1xe3qXF8n2BkR8RyApCdIPbVNgPskAbwHeKhsm08ChwJExBRJj5asuysiXs71PQ2sU7L8qbz8KuAo4GnggYiYlctcDHy7pK77S17PjogH8uvHcr0f62D7TYE5EfFgjvE6SRdL2hAYGBG35fLjgGM6OzgR8RNJu0v6Jqn3/B5gFVLCvjcn9YOBK4EtgRciYnre/FJSL9qsENWej7ZR57h1u+pLd9rVr19Tp7++6OtrsAtKXrcCrwDXRsTgfM31Y8AJZdu8RcdxLyqrr6md5f2AN9upo4l3fuEovZ22vXo72r692JqA+SXxlNfZLkmjgZNIQ8BnkoabmyLieSCAIcAngBvp/LiYmVkvq8UT8n6S3iepCbiIdD221O2ka7VI2pLUs2utUOcukjaQ1A84PNdxP7BDHgIGOB6Y1I04O9o+gLUlbZdjPBB4NiJagGcl7ZXLH9KFfXwSODcirgNEuobcP6+7AhgNTIqI14AngDXzMWmrv9JxMTOzgtRagv0v8H3gTtJQbH/g7LIyZ5BuZpoO/AB4nnf2NtvzGGnI9FHgX8CYiPgPKSmOl/QYqTc4oquBdrR9RCwEDiJdj51B6oEflDc7DPiepIeBjbqwm7OAK0rqmUK6ngwwnjScfmWO541c/+WSpgIfpPJxMTOzgjS1ttZXJ0fSYcDMiLhb0gbAX4CNImJxH4fWp3Lv/Gzg+xHxqqRvAOtHxMld2LwZmOkHTVhXTRg93Ndgu8jtqi89vAY7CJhVvr6vb3LqiSeBX+Wfpywm/QSmbpOrpK8DR7SzanZEDOtqPRGxWNLLwIOS3iC92Z3eRFVuzMih3Sluy7AFCyveQmC2zKu7HqwVohmY2dIyn8WLG+vz4G/Z9aMR2wRuV72pZg+21q7BmpmZNQQnWDMzswI4wZqZmRXACdbMzKwATrBmZmYFcII1MzMrgBOsmZlZAZxgzczMCuAEa2ZmVoB6fFSiFaSzeQ3rmSeFLsaChYuYN9fPrjbriBOsLeGH/Vt3TBg9nMZ7UJ5Z9fRoiFjSZElDqhxL+T5WlzS+yH1Ug6Sxkjbshf2Mk3Rk0fsxM7PqqOVrsGsCW/d1EF2wO9DU10GYmVltqThELKmJNM/ofsAi4Ndl608jTfT9FnArcCqwCnA18P5c7PsR8UdJGwMXAWsDrwEnRsTDkg7J270FzMz1/RwYKGl8ROzXSXwvADcAOwHzgEMjYpakWcD9wGBgV2Av4GSgFZgKnBAR8zvZfjvgPGBl4CXStHgzJU0GXga2AMYCA4GJkr4LfCMids5xHQlsHxFf7iDuG4CrIuL6/PdU4FjgvcAP837XAL4eETeWbNcMTI6I5vz3KICIGCXp06RJ6JfPx/G4iGjp6NiZmVlxunIN9vPAzsCWpBP334AVASR9BtgH2BZ4A7geGAHMB2ZFxF6SBgOHAn8ELiMltoclbQ6MBwScCewQES9IOhfYDDiJlEg6TK7ZAODeiBgh6URSYt4nr7s5Ig6StCXwHVLCa5F0IfA94JT2tpf0eeAS4LMR8Q9JnwJ+A3wi1zs9Ij6Xj8EIYBjwLHCupI0i4mngcODbncR9RT4u10vaBFgxH5ffA8dGxJOS9gDOB27spB5yHANIX4R2j4g5kr4EnENK2maFqPaNVn1941ZR3K76Uq12dSXB7gZcGxELgYXA4NyLA9gTuDoiXgOQdClp8vD/BX4kaX3gT8AZklYFtgPGSmqre1VJawMTgLvzNdfrI2Ja7ql1xQLg8vz6MuCsknX3l7RhQklv7mJS77Oj7TcFNgL+WBLre9upd4mIaJV0GXCYpLHAuhHxrnIl/gT8QtJqwMHAlXn5YcDekg4AdgC6emvv9sAGwKQcc39ST9usMNWcD9Tzi9YXt+sd88G2v74LdbxJGlYFlgxRrtLB9k3AchHxFKkXehVpePYB0gl/QUQMbvtHSgovR8TXgP2BOcCVkg7rQlxtFkdEW3z9SMPYbV4vWf6uODvZvj/wTEmcHwV2aafecuOAL5AS5uUdlAEgIt4gfbHYBzgQ+G1e9VfgY6Rh7B/y7uu7rWXLls//7Q/8rSTm7UjH1MzM+kBXEuxdwP6Slpe0MnALsH5edydwsKSVJC0HHEXqQZ1Auu56HfAV4H2kpPBUW/KU9Mlc93KSngJeioizSIlpa1Ki60oPe2VJn82vjwJubqfMZGAfSWvlv48DJnWy/ZPAWpJ2zcuP5u0EWG5JnBHxLPAc8GXSEHAlV5CuC7dExLM5vk2B03Mcw0mJs9QrObYBklYAPp2X3w/sKGnT/Pd3gZ90IQYzMytAxQQbEeOBu4GHgAdJ1wT/L6+7CbgJmAI8BvwDuICUJCXpUVKP7JSIeIV0zfFYSdNJQ7EHRcSbpIRym6QppGHRc4D/AP+Q1JYIO3NArvNTwP+004a2/f1F0pOkm4dGdrR9Hg4/ABidlx8BHNPBvm8i3eQ0KP99DfB4RMyuFHRE3A2sTh4ejoiXgTGkY/kEsBrpC8AqJdv8F/gx6b24nTQ6QEQ8T/oicG0+7tuQkreZmfWBptbW1sqlapik1ojo8c9klnb7srqWI/VKr4uIG6pRZy9pBmb6QRPWHRNGD/c12C5wu+pLD6/BDgJmla+v+Sc5SVoJuLeD1af3ZiydyT9nmg3cBvwhL9uV1KNvz7Cu9HJ705iRQ/s6BKsjCxYuqlzIbBlW9z1Yq4pmYGZLy3wWL26sz4O/ZdePRmwTuF31ppo92Fp+kpOZmVndcoI1MzMrgBOsmZlZAZxgzczMCuAEa2ZmVgAnWDMzswI4wZqZmRXACdbMzKwATrBmZmYFqPlHJVrv6Wxew3rmSaGLsWDhIubN9bOrzTrSMAlW0hBgVEQM6eNQ3kXSRODYpX32sKRRABExStK0PO9rR2UnRcTu3anfD/u37pgwejiN96A8s+ppmARbyyJiWAF1dphcsyHV3qeZmXVdwyVYSbsBPwRWJs37+vWIuFHSOOBV0jypawCnAV8EPgL8ISJOlnQksDdpgvj1gAnAyRHR7hPwJTWTZs55EtiCNGfuPcCRwJrAfhHxhKRZpIQ3hDRB+lrAh4BbI+IrFdpzCnA88BIwhzz/a9s0e5L2JM0P25rXH0yeZUjS/RGxfRcOm5mZVVkj3uR0Imk4dhvgWODMknUDI2JH4GxgLDACGAwcJ2n1XGYX0mTrW5Amf9+vwv62Ik0Q/xFgZ6A57+NqUmIstxOwf97us5K27KhiSduSJlHfGvgE8IF2io0ERkTEtqSp8raJiJMAnFzNzPpOw/VggcOAvSUdQEqQpXfu3Jz/+ywwIyJeAJD0MqnHCXBjRPwnL78G2APobPL05yPi4Vz+OeCOkn0Maqf8PRExL5d/htSb7cgQYGJEzM/lrwP6l5X5IzBe0h9y7Ld1Up9ZVVX7Rqu+vnGrKG5XfalWuxoxwf4VmARMJiW735ase6PkdUezRZcu79dJufbq7KzeNgtKXrcCTZ2ULV+/iLIEGxHnSZpAGtr+saTfR8QPK8RgVhXVnA/U84vWF7frHfPBtr++WkHViLWATUnXIG8GhvPuHl8ln5a0uqQVSdczb660QYHuIA0jt8XzruFqSfcDq0XEz4DzSNeYAd6S1IhfoMzM6kKjJdiXgTHAY8ATwGrAypJW6UYdLwITgUeAmyLiz1WPsosiYhrwM+BB4C+kYedypwHjJE0FjgG+lZffCDySE7OZmfWyptbWdm+QXSblu4iHRMSRfRxKb2sGZvp3sNYdE0YP9xBxF7hd9aWHQ8SDgFnl6z2EWIGkjYDrO1h9bERMqeX6u2PMyKG9tStrAAsWVrrdwGzZ5h6sQe7BtrTMZ/Hixvo8+Ft2/WjENoHbVW+q2YNttGuwZmZmNcEJ1szMrABOsGZmZgVwgjUzMyuAE6yZmVkBnGDNzMwK4ARrZmZWACdYMzOzAjjBmpmZFcCPSrQlOpt2qZ55zsr6UY02LVi4iHlz/Uxt63tOsLaEH/ZvjWDC6OE03gP8rB45wfYCSc3A5IhoLlveGhFNktYFRgM7Aq8C/wa+FREP53KTgVERMblk23G5znGSZgGv8fbk72sAU4AjIuLVotplZmYd8zXYPiZpJWASMA3YOCK2An4C3CpJ3ahqWEQMjojBpEnnNwAOr3rAZmbWJU6wfe8g4IWI+ElEtAJExG3AWODUHta5BrA6aQJ6MzPrAx4i7j0DJU1rZ/l2wAPtLL8L+FE36p8oaRGwLvBP4BfAtd2O0szMqsIJtvfMzsO3S0hqBVpp/314T14HsLid9U1ly4dFxCxJ+wM/Ba5r6xGbLWtq7Q7rWounWtyuzjnB9r37ga+0s3xH0o1KAHNIw76l3peXv0NEXC9pKHApMKyKcZrVjVqaCNwTk9eXHk643v76agVlPXYtsLKkb0tqAsgJ8ijg3FzmDuBwScvl9QI+CtzbQZ3fBXaRtFehkZuZWYecYPtYRCwE9gA2AULSk8A3gU9GxJO52MXATOARSY8CVwCHRsRLHdT5AnAOcG5bUjYzs97V1Nrqy3RGMzDTD5qwRjBh9PCaGrr0UGp96eEQ8SBgVvl6925siTEjh/Z1CGZLbcHCRX0dghngBGslWlrms3hxY41o+Ft2/WjENtmyzddgzczMCuAEa2ZmVgAnWDMzswI4wZqZmRXACdbMzKwATrBmZmYFcII1MzMrgBOsmZlZAZxgzczMCuAnOdkSnU27VM88Z2X9aJQ2LVi4iHlz/VzvZZ0TrC3hh/2bVceE0cPxQx+t5oaIJQ2RNLmgukdIGpFfj5W0YYXykyUNqcJ+J0oaWIV6RkkalV9Pq1B20tLuz8zMem6Z6sFGxK9K/twd+H4v7XdYAXUOrlBkSLX3aWZmXVerCXaApInARkAABwCHACcDrcBU4ARgIXAp8OG83S8j4jeSxgGvA9sB7wXOiIgr2np/wAJgIDBR0q6kCc9PBlYCVgCOjoh7KgUpqRn4A/AksAXwEHAPcCSwJrBfRDwhaRYp4Q0BPg2sBXwIuDUivlJhH6cAxwMvAXOAB/Ly1ohokrQn8ON8XOYABwOn5zL3R8T2ldphZmbVV6sJdgNgb+BZ4D5gBHAisH1EtEi6EPgecBOwVkRsnYdgzwZ+k+vYCNgRWBeYKum2tsoj4uw8VDyMlJRGAHtHxEuSjga+DXy2i7FuBRwFPAL8HzA7InaU9D1SYvx6WfmdSMn4LSAkXRQRj7ZXsaRtgaOBrUkJ9F5ygi0xEhgREQ9KOhXYJiJOknSik6tZ3ym9YatRbt4q53Z1rlYT7CMRMRNA0hPAGsCEiGjJ6y8GxpISqiT9GZgInFJSx9iIeBN4TtLdwC7t7SgiFkvaD/isJJF6mW91I9bnI+LhHOtzwB15+bOkWe7L3RMR83L5Z0i92Y4MASZGxPxc/jqgf1mZPwLjJf0BuDEibsPM+lzb3LaNOs+t2wX9+jV1+uuLmrvJKVtU8rpt6LNUE7BcTrhbABcAAh6StEY7dfQr+3sJSauSeoWDgLuAn+f6u+qNTmJvz4KS160V9lW+/l11R8R5pET8d+DHkr5TYf9mZtYLajXBtmcfSW29veOASZL2Aa4A/gScBMwHPpjLHCipKd8pvD3w17L6FpF68JuSEtmPgEnA53h3L7Gv3EHqWa8uaUVgv/ICku4HVouInwHnAdvkVW9JqtURCjOzhlcvCXYucBbwF0lPkoaMRwI3k25meozUC72y5HrmysAUUvI9vmR4uc1NpGHl/wLTSDcqPQa8CHT6853eEhHTgJ8BDwJ/IQ07lzsNGCdpKnAM8K28/EbgkZyYzcyslzW1trb2dQxVl+8inhwR4/o4lHrRDMz0gybMqmPC6OG+BlunengNdhAwq3y9hxArkLQRcH0Hq4+NiCm1XH93jBk5tLd2ZdbQFiysdCuGLQsasgdr3dYMzGxpmc/ixY31efC37PrRiG0Ct6veVLMHWy/XYM3MzOqKE6yZmVkBnGDNzMwK4ARrZmZWACdYMzOzAjjBmpmZFcAJ1szMrABOsGZmZgVwgjUzMyuAH5VoS3Q2r2E986TQ9aMR2wTvbNeChYuYN9fP/F4WOMHaEn7Yv1nxJoweTuM9YNDa03BDxJKOzLPpVKOupX4wr6SBkiZWKZ7JkoZI2lbSJZ2UGyRpTDX2aWZmPeMebMEiYjYwrMp1TgGO7aTIhsBG1dynmZl1T90kWEkfAK4CVgEWAycBqwKjST3xZ4FDcvGNJU0GNgDuiIjjch2nAYcBbwG3AqdGxFuSjgJOBlqBqcAJETG/CzEdCewFrA0MBH5NSm57AC3AZ4D3k+ambc496/8CHwXWB34QEWM7qRKDe3sAAA5bSURBVH8F4BJgW9JMDevk5UOAURExRNI3gCPyMXkgIr4E/Bz4kKQLI+KrldphZmbVVzcJFjgGuCkizpX0aWA34BvApyJimqSzSIlmHimxDgZeBZ6WtEVetg8pWb1BmoN1hKS7gO8A20dEi6QLge8Bp3Qxro8BWwJrkpLgpyPifyRNAj4FPFJW/oPArsCHgclAhwkWOBEgIv6fpE2A6aUrJfUHvk1K7m8BYyStT/ryMcrJ1aw2NcrNXI3SjnLValc9JdjbgRskbQ38CbgbOCgipgFExLdhSa/yroh4Of/9NKnntydwdUS8lpdfSkrITcCEiGjJ+7mYzpNeubsjYi4wVxLAHXn5s6SkW+7WiGiVNANYq0LdQ0i9YiLiKUn3lK7Mve97gAeBG4HREfGvnIzNrEY1wjyqng/2HfPBtr++WkEVLSLuBjYH/gwcBJxBGtIFQNLqeRgZYFHJpq2kJFre1ibSF4yOlnfVG2VxLuqoYLYgl+vKDVRtsbdpr+59gS/ncrdI2q0L9ZqZWcHqJsFK+jFwWERcBpwAbAW8T9LmucipwIhOqrgTOFjSSpKWA44CJpGGafeR1NabPC4vrwW3A4dK6idpQ2Cn0pWSBgCPA49GxOmk68pbkRJxPY1OmJk1nLpJsMAFwOclTQPGA4eTbli6XNJ0Uu/27I42joibgJuAKcBjwD+ACyJiOnAW8BdJTwJrACOLbEg3/BKYCzwB/AaYUboyIl4kDWk/KGkqsCJwaS6/hqQrejdcMzNr09TautQ/9bT61wzM9IMmzIo3YfTwhrh26Wuw77gGO4h0k+s7eBixAkkHke7UfZeIGFzr9XfHmJFDe3N3ZsukBQsr3aZhjcI9WIPcg21pmc/ixY31efC37PrRiG0Ct6veVLMHW0/XYM3MzOqGE6yZmVkBnGDNzMwK4ARrZmZWACdYMzOzAjjBmpmZFcAJ1szMrABOsGZmZgVwgjUzMyuAH5VoS3Q2r2E986TQ9aMR2wS1164FCxcxb66fO140J9gaIGkIMCoihvRlHH7Yv9myYcLo4TTeQw5rj4eIzczMCuAebA2TdBppztu3SJOpnwp8kDQf7gxga+A/wAER8bKkA4EfAK8CDwPLRcSRfRC6mdkyzz3YGiXpM8A+wLakRLoxMCKv/gjw04j4MPAKcKikAcDPgD2B7YC1ej1oMzNbwj3Y2rUncHVEvAYg6VLgCOBPwAsR8XAuN4OUTHcF7o2If+XylwH79XrUZlYXqnHjVa3dvFUt1WqXE2ztKh9daOLt92tByfLWvO6tdrYxM2vX0s7l6vlg3zEfbLucYGvXncBISRcDbwJHAZM6KX8PcKGk9YDngS/wzkRsZma9yAm2duwqaX7J31cCNwFTSO/TrcAFwAfa2zgiXpR0EnAbKbHOAuYUGbCZmXXMCbYGRMRkoH8Hq88s+3sW0Fyy7SgASWuTbn7aKiIWS/o58FSVQzUzsy5ygm0cLwNrADMkLQIeAn7TnQrGjBxaRFxmVmMWLFzU1yEsE5xgG0REtAJfW5o6Wlrms3hxa5Uiqg2+EaN+NGKboHHbZZX5rlMzM7MCOMGamZkVwAnWzMysAE6wZmZmBXCCNTMzK4ATrJmZWQGcYM3MzArgBGtmZlYAJ1gzM7MCNLW2NtaTe6xHmoGZfR2EmVlXLFi4iHlzXy+k7h5OVzeI9Jz4d/CjEm2JY868lRfmFPOhNTOrlgmjh1MPD5/0EHGdkDRE0uRulO9s7lgzMyuYE2zjGtLXAZiZLcs8RFzHJC0HXAR8GFgXmA4cDJyT198fEdv3XYRmZssu92Dr207AGxGxI7AxaT7YYRFxEoCTq5lZ33EPto5FxF2SWiR9FdgM2ARYtY/DMjMr3IABq9V83U6wdUzSPsAPgPOBscA6QFOfBmVm1guKmsS+hz/TaX99tYKyPvEJ4NqIGAu8AuwO9M/r3srXaM3MrA/4BFxfdpU0v+Tv+4HdJR0MvAHcTfrBM8CNwCOSPhoRC3o5TjOzZZ4TbJ2IiMm83TvtSvn9i4vGzMwqcYK1JcaMHNrXIZiZVbRg4aK+DqFLnGBtiZaW+Sxe3FjPpu7ODQv1pBHb1YhtArdrWeabnMzMzArgBGtmZlYAJ1gzM7MCOMGamZkVwAnWzMysAE6wZmZmBXCCNTMzK4ATrJmZWQGcYM3MzArQ1NraWE/usR5pBmb2dRBmZr1twcJFzJv7+pK/ezhd3SBgVvl6PyrRljjmzFt5Yc7rlQuamTWICaOHU9QDH5eJIWJJrfm/IySN6IP9T6tSPeMkHSlpoKSJnZRbXdL4auzTzMx6ZpnqwUbEr/pov4OrXN9sYFgnRdYEtq7mPs3MrHvqMsFKGgJ8F3iTNPb9AHAscAhwMtAKTAVOiIj5JduNAoiIUZIOAUbmsg8CxwErABcCHybNvXpORFxdIY7vkCY7HwT8EZgP7As0AcMi4j+SWiOiKe9/fWATYEPgkoj4YSf1NwGjgb2B2TmmyZKagckR0ZzbcSrwFuk66mHAz4GBksZHxH6dH00zMytCPQ8R7wR8DdgMWBH4FinZ7RYRWwKvAt9rb0NJ6wPnAUMjYgtS4tqLlHCnRsRHgY8D35H0oQpxbA+MALYFTgBejIhtgenAF9opvxUwNG/3LUlrdFL3/qSe6BbAAcDG7ZQ5M7fjo6QEuxlwEjDbydXMrLIBA1Zb8q/8787+5RucOlSXPdjsrogIAElXADcAF0RES15/MTC2g213BO6OiOcAIuKLuZ6RwMqSjs7lViElt2c6iWNGRPwzb/8ScEde/ixpqLbcpIh4A3hB0svA6sArHdQ9BLghIt4EXuzguusE4O58zfX6iJiWe7hmZtYFpXcN9/Au4vbXL3Vkfad0Svt+vLstTXT8BeJN0tAwAJIGSBpA6skeFhGD83XTHYBbKsTxRidxtWdByevWHGdHyte/q+6I+BqppzsHuFLSYRX2b2ZmvaCeE+wuktaX1A84HPg6sI+ktfL644BJHWz7ILCDpPfnv88DhgN3Al8GkLQeaZh3g4Li74rbgQMlrSBpTeDTpSslLSfpKeCliDgLuJw0pLyI+h6dMDOre/WcYGeTEsrjwL+AXwBnAX+R9CSwBuma6rvku3C/BvxZ0gzgddJw8veBlfKyO4FTI+LpohvSkYi4EZgMzCDdQPV42fpFwOnAbZKmkHrc5wD/Af4hqaMvGGZmVrC6fJJTvnt3VEQM6eNQGkUzMNMPmjCzZc2E0cOrcQ3WT3LqCUm7Ahd0sHpY7g3XbP3dMWbk0N7alZlZTViwsNJtMz1Xlz1Yq7pmYGZLy3wWL26sz0N3vo3Wk0ZsVyO2CdyuelPNHmw9X4M1MzOrWU6wZmZmBfA1WIP0+1/69evsJ7n1y+2qH43YJnC76k1X21VSrn97630N1gB2Af7a10GYmdWpXYG/lS90gjVIkxxsB/ybNGmAmZlV1h9Yj/TwooXlK51gzczMCuCbnMzMzArgBGtmZlYAJ1gzM7MCOMGamZkVwAnWzMysAE6wZmZmBXCCNTMzK4AflbgMkHQIafL55YGfRcSFZesHA5cA7wXuAkZExCJJGwBXAu8DAjg0Iub3avCdWIp27QycB7wHaAGOjohnezX4DvS0TSXrtwbui4gVei/qypbivVovLx8IvEb6DM7qzdg7sxTtagYuz8tfAY6olc8gVG5XSbnLgTsjYlz+u2bPGUvRph6fL9yDbXCS1gd+SHoc4mDgeEmblxW7EjghIjYFmoDj8vJfAr+MiM2AKcB3eyfqypayXVcBx0bE4Pz6570TdeeWsk1IWpk0t/B7eifirlnKdl0BTIiIrfPrc3on6sqWsl1nAFfnz+D1uZ6a0JV2SRooaQLw+bLNa/KcsZRt6vH5wgm28X2C9G3s5Yh4Ffg9JR8gSRsCK0XEfXnROOAAScsDH8/llyzvraC7oKftWgEYGRHT8/LpwAa9F3anetSmku1HAz/rpVi7o6fv1TrAR4Bf5+VjST2QWrE071d/Uu8VYBXg9V6JuGs6bVd2KHAjcG3bgho/Z/S0TUt1vvAQceMbSHrGcJt/Ax+rsP4DwDrA3JLhx7bltaJH7YqIhaReBZL6AaOAPxQaadf19L1C0j7AyhHxe0lFx9ldPW3XRsA/gNGSdgWeB04oNtRu6fH7RerZ3SPpJNKIw44FxtldldpFRJwLIGmXksW1fM7oUZuW9nzhHmzj6weUPnC6CVjchfXlyynbrq/1tF0ASHoPabhnOeBHxYXZLT1qk6T3k3p2JxYeYc/09L1aDtia1PPYjtS7uKzYULtlaT6DlwHHR8T6wAhgvKRamfutUru6uh1d3K439LRNQM/PF06wje850mwPbd4PzO7C+heA1SW1zXO4Xtl2fa2n7ULSqsAtpP9ZhkfEm8WG2mU9bdPewNrAXZKmAUiaJmm1YsPtsp6263lgXkTclJf/lrJeRx/rUbskDQA2i4gbASLi+rxunWLD7bJK7epILZ8zetqmpTpfOME2vtuBPSUNyDfB7E/6sACQ74ZbkO+UA/gicHP+EP0VOCgvPxy4uffCrqhH7cqvrwT+DhyUh4BqRU/fq0siYqOIGJxvxCC/ntfbDehAT9v1NPCcpM/k5Z8FpvZi3JX09DP4Ul6+Kyy5S3VeRLzYq9F3rNN2daTGzxk9alPW4/OFE2yDi4h/Ad8BJgHTgN9GxAOSJkraNhc7FDhP0pPAqrx9l9xXSHfbPU6aULhmbjDpabvyz1iGAzsDD+We3sQ+aMK7LOV7VbOWsl2fA/5X0gzga8DRvRt9x3rarohoJbXrJ5KmAz8mnfBrQhfb1ZGaPGf0tE1Le77wfLBmZmYFcA/WzMysAE6wZmZmBXCCNTMzK4ATrJmZWQGcYM3MzArgBGtmZlYAJ1gzM7MCOMGamZkV4P8DYSwqCVanrUQAAAAASUVORK5CYII=\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "fig, ax = plt.subplots()\n",
+    "feat_import_tree20 = pd.Series(model.feature_importances_, index = X_train.columns) \n",
+    "feat_import_tree20.nlargest(10).plot(kind = 'barh', title = \"Variable Importance Random Forest Model\")\n",
+    "                                     \n",
+    "                                     "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
