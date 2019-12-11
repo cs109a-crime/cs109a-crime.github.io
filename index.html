@@ -336,33 +336,41 @@
 						<div class="content">
 							<header class="align-center">
 								<h2>Exploratory Data Analysis (EDA)</h2>
-								<p>Before modeling, we needed to understand the datasets we were working with, using statistics and graphing.</p>
+								<p>Before modeling, we needed to understand the relationship between crime categories and location data.</p>
 							</header>
-							<hr />
-							<div class="image left">
-								<img src="images/streetlamps_boston.png" alt="" />
-							</div>
-
-							<p>As previously mentioned, we're concerned with two types of data to better understand and predict crime: 1) location data and 2) economic data. We began our analysis by looking at location data to better understand the relationship between crime and its location in Boston.</p>
-							<p>We plotted the location of all street lamps in Boston which can be seen in the image to the left. We were interested in seeing if there were any anomalies, such as areas that might have data missing about nearby street lamps. Comparing this image to other maps of Boston that we have seen before, the dataset appears to be comprehensive and the street lamps distributed as we might expect. </p>
-							<p> The street lamps are clearly placed in a grid-like pattern throughout Boston which makes sense given the way urban planners typically construct neighborhoods. We see very few street lights in the top right of the map. This makes sense as this is not residential land but is part of the Boston Logan Airport. We'll want to be careful when analyzing crime in this area as the lack of street lamps might throw off the association we're investigating.</p>
-							<div class="image left">
+							<p>We began our EDA by categorizing crime offense_codes into five different broad categorizations of serious crime: domestic, violent, drugs, burglary, and possession weapons. We chose these five categories for three main reasons.
+							<ol type="1">
+								<li>The specificity of the <i>crime_incidents</i> dataset's offense_code was hindering predictive power with over TODO categories</li>
+								<li> Domestic, violent, drugs, burglary, and possession weapons are the most frequent serious crime groupings</li>
+								<li>These five categories require the most specialized police task training. Specifically, Obama’s Task Force on 21st Century Policing report highlighted specific efforts to include specialization in domestic violence and drug-related law enforcement deployment.</li>
+							</ol>
+							<p>Our EDA analysis explores correlations between location coordinates and amenity availability and crime categories.</p>
+							<p>We first constructed a map plotting locations of crime incidents in Boston, differentiating between the most egregious crimes (i.e., shootings) in red and all other forms of crime in blue. The plot shows us what we might expect: crime incident is correlated with population density. Thus, the more populated areas of Boston in its center sees more crime than the outskirts. </p>
+							<div class="image right">
 								<img src="images/shootings_boston.png" alt="" />
 							</div>
-							<p>Next, we wanted to continue to investigate location data, but specifically through the lens of where crimes are happening in the city. We constructed another map of one of our datasets, this time plotting incidents of crime in Boston. We chose to color code the map to differentiate between the most egregious crimes (i.e., shootings) and all other forms of crime. We've colored non-shootings in blue and shootings in red. We intentionally chose this binary distinction because shootings were the most commonly reported crime in the news, and thus the most interesting/relevant to map.</p>
-							<p>The plot shows us what we might expect: incidents of crime are correlated with population density. Thus, the more populated areas of Boston in its center sees more crime than the outskirts. The shootings appear to be distributed almost entirely in downtown, urban areas of Boston. We also see that there are pockets of areas in the city that experience no crime whatsoever. We investigated each of these to ensure this was not a problem with our plot or the dataset itself. We found that many of these areas are industrial centers or non-residential areas, such as factories or the Boston Logan airport. Thus, it's plausible no crimes took place here or at least they were perhaps reported offsite once not on these premises.</p>
+							<p>We next explored the relationship between specific crime category and latitude/longitude location data. <i>Public Disturbance</i> crimes are concentrated near public locations such as the Boston Commons and Prudential Center while <i>Domestic Crimes</i> are much more concentrated in downtown, urban Boston areas and <i>Motor Vehicle</i> accidents occur on exclusively on roads.</p>
 							<div class="image left">
-								<img src="images/commoncrime.png" alt="" />
+								<img src="images/eda_images/domestic.jpg" alt="" />
 							</div>
-							<p>Our crime incidents dataset features markers for the different types of crime that ocurred. We constructed a bar plot of these categories to the left so we could better understand the types of crime that occur in Boston and the data we have available to work with.</p>
-							<p>As we might expect, the most common type of crime is one that is not a crime at all: police responding to sick/injured individuals after a 911 call is placed. We were surprised to find that arrests of suspects and property damage caused by motor vehicles where the driver left the scene are the next two most common forms of crime. Overall, the majority of crimes are non-violent, such as theft and larceny.</p>
-							<p>The histogram shows that there are quite a few incidents of vandalism that occurred in the City. We're interested in investigating the relationship between vandalism and the presence of street lights, so we having a large sample of these crimes to model off of is very helpful.</p>
 							<div class="image left">
-								<img src="images/propval.png" alt="" />
+								<img src="images/eda_images/mv_accidents.jpg" alt="" />
 							</div>
-							<p>We performed a variety of other EDA tasks, but the last one we want to share is regarding property values, the second type of data we explored in our analysis. We created a histogram (seen on the left) of property values in Boston to better understand the distribution of property values throughout the city.</p>
-							<p>We find that property values are not distributed normally in Boston. The distribution is right-skewed with many extremely expensive properties pulling the average up, well beyond the mean. The plot also appears to be somewhat bimodal, with a second peak at the lower end of the distribution where a number of lower value properties are recorded. The range overall is quite remarkable: some properties are worth as much as $2 billion. The majority of the values are under $2 million though, which is in line with what we'd expect.</p>
-							<p>Overall, the EDA process was extremely helpful for us in better understanding our data and its limitations. We were able to use this analysis to inform how we approach the model-building process and could then better understand where our models might fail.</p>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<p>We next explored the correlation between amenity availability (including school, hospital, streetlight, and police-station proximity). Streetlamp are evenly distributed across Boston and add little predictive power. However, density of hospitals, school, and police stations near a crime location appear highly correlated with crime category. TODO: ADD GRAPH </p>
+							<p>The EDA process highlighted different correlations between crime categories and location specifics. We were able to use this analysis to inform how we approach the model-building process as we heavily prioritized hospital-proximity and school-proximity as important predictors.</p>
 						</div>
 					</div>
 				</div>
