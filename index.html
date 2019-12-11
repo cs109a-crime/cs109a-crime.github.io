@@ -136,35 +136,103 @@
 									<p>Next, we cleaned our data to create a foundation.</p>
 								</header>
 								<hr />
-								<p> 1. We first dropped rows with a substantial amount of missing data, since these would not help us.</p>
+								<p> 1. Dropped Missing Data: We first dropped rows with a substantial amount of missing data, since these would not help us.</p>
 								<p>
-									2. We looked for ways to create a master dataframe with which we could train and test our model.
+									2. Sampling: We looked for ways to create a master dataframe with which we could train and test our model.
 									To do this, we had to combine many CSVs by certain indices. The data sets were very large, so we sampled
 									from some of them to make certain processes faster, without giving up the integrity of the data.
 								</p>
 								<p>
-									3. One issue was that the crime reports gave location in terms of longitude and latitude.
+									3. Geocoding: One issue was that the crime reports gave location in terms of longitude and latitude.
 									To combine closest property value with crime, we had to use geocoding, which is the
-									process of converting addresses to longitude and latitude. Once the property addresses
-									were converted into longitude and latitude, we then found the average neighborhood property value to a given
+									process of converting addresses to longitude and latitude.
+								</p>
+								<p>
+									4. Property: Once the property addresses were converted to longitude and latitude,
+									we then found the closest property value and the average neighborhood property value to a given
 									crime. This was computationally difficult since we needed to test many properties for each crime
 									to achieve this, but once we did it one time, we could save that CSV for future use.
 								</p>
 								<p>
-									4. We followed a similar technique to find how far away the closest streetlight was to the crime.
+									5. Min Distance and Density: We followed a similar technique to find how far away the closest streetlight was to the crime.
 									Using the coordinates of the streetlights, we found how far away the closest streetlight was
 									to a crime by converting from coordinate Euclidean distance to a familiar distance metric.
+									We then found the density of streetlights in a radius of ___ miles from the incident.
+									We did this computation for streetlights, police stations, hospitals, and schools.
 									Again, this was computationally taxing, but only needed to be performed once.
 								</p>
 								<p>
-									5. We looked at weather for each day in Boston, to see if it affected type of crime.
+									6. Weather: We looked at weather for each day in Boston, to see if it affected type of crime.
 									We took the average temperature, precipitation amount, and snow amount to see whether there
 									was a relationship.
 								</p>
 								<p>
-									6. We used these features to predict the crime "category", which we defined as one of
+									7. Response: We used these features to predict the crime "category", which we defined as one of
 									theft, vandalism, mv accident, violent, burglary, possession weapons,
 									domestic, petty theft, medical, drugs, and civil disruption.
+								</p>
+								<p>
+									Master Dataset Columns:
+								</p>
+								<p>
+									Lat: latitude of crime incident
+								</p>
+								<p>
+									Long: longitude of crime incident
+								</p>
+								<p>
+									Month: month of crime incident
+								</p>
+								<p>
+									Day_of_Week: day of the week of crime incident
+								</p>
+								<p>
+									Hour: hour of the day of crime incident
+								</p>
+								<p>
+									TAvg: average temperature for the day of crime incident
+								</p>
+								<p>
+									Prcp: precipitation amount for the day of crime incident
+								</p>
+								<p>
+									Snow: snow amount for the day of crime incident
+								</p>
+								<p>
+									Closest_property_value: value of the closest property
+								</p>
+								<p>
+									Neighborhood_avg: average neighborhood property value
+								</p>
+								<p>
+									Lamp_min_dist: distance to the nearest streetlight
+								</p>
+								<p>
+									Lamp_density: density of streetlights around the crime incident
+								</p>
+								<p>
+									Police_min_dist: distance to the nearest police station
+								</p>
+								<p>
+									Police_density: density of police stations around the crime incident
+								</p>
+								<p>
+									Hospital_min_dist: distance to the nearest hospital
+								</p>
+								<p>
+									Hospital_density: density of hospitals around the crime incident
+								</p>
+								<p>
+									School_min_dist: distance to the nearest school
+								</p>
+								<p>
+									School_density: density of school around the crime incident
+								</p>
+								<p>
+									Shooting: whether the crime incident was a shooting or not
+								</p>
+								<p>
+									Category: our response variable, density of streetlights around the crime incident
 								</p>
 							</div>
 						</div>
