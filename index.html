@@ -428,6 +428,44 @@
 								<h2>Project Trajectory, Results, and Interpretation</h2>
 							</header>
 							<hr />
+							<h3>Project Trajectory</h3>
+							<p>
+								Our project changed dramatically as we decided what we wanted to focus in on.
+							</p>
+							<p>
+								First, we wanted to predict whether a certain crime was a shooting or not (0 or 1). After
+								trying a few models, we soon realized that the number of shootings is too low to accurately
+								predict; our model was simply predicting no shooting for every input, and this gave us high
+								accuracy, but no advantage over the naive model of always predicting the most common outcome,
+								which was no shooting.
+							</p>
+							<p>
+								Next, we wanted to predict UCR, the severity of the crime as dictated by the UCR system.
+								This was difficult for a reason similar to the shooting: Part 3 was the most common UCR,
+								so our models were always predicting that. In addition, locational data did not give us that
+								much of an advantage in predicting UCR, since it was distributed somewhat evenly across
+								all the neighborhoods of Boston. The naive model wasn't much worse than the models we could come up with.
+								Also, this was not as useful for our research question, since predicting the UCR did not give
+								much info into the kind of crime being committed, only the severity of said crime.
+							</p>
+							<p>
+								We then decided that we could predict crime category. Originally we were trying to predict 11
+								categories of crime, and were making improvements over the naive model. However, our research question
+								made us decide to cut this down to 5 (burglary, violent, possession of weapons, domestic, and drugs),
+								since these could require specialized police units to deal with, and they were the more egregious crimes.
+							</p>
+							<p>
+								Throughout all of this experimentation, we documented our model attempts, new EDA, and other
+								tinkering. These can all be found in our project.
+							</p>
+							<h3>Results and Interpretation</h3>
+							<p>
+								From the results shown above in the final model, we see that we can provide a sizable increase
+								over the naive accuracy. If we can predict the top two possibilities of crime with this high
+								of an accuracy, this means we can respond to a crime with the right teams for the job. If
+								police know what kind of crime they are about to see, they can better prepare for it. A violent crime
+								should have a different response than a drug related crime.
+							</p>
 						</div>
 					</div>
 				</div>
@@ -449,7 +487,8 @@
 							<hr />
 							<p>
 								After a few weeks of attempting to predict crime type, we found that it is much more difficult
-								than we anticipated. Crime is a very random event, and where and when it happens can be anywhere.
+								than we anticipated. Crime is a very random event, and where and when it happens can be anywhere
+								and anytime.
 							</p>
 							<p>
 								That being said, we did find some interesting ways to predict the type of crime given some
