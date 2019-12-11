@@ -157,8 +157,9 @@
 									5. Min Distance and Density: We followed a similar technique to find how far away the closest streetlight was to the crime.
 									Using the coordinates of the streetlights, we found how far away the closest streetlight was
 									to a crime by converting from coordinate Euclidean distance to a familiar distance metric.
-									We then found the density of streetlights in a radius of ___ miles from the incident.
-									We did this computation for streetlights, police stations, hospitals, and schools.
+									We then found the density of streetlights in a radius of 0.01 degrees (in terms of
+									degrees latitude or longitude) from the incident. We did this computation for
+									streetlights, police stations, hospitals, and schools.
 									Again, this was computationally taxing, but only needed to be performed once.
 								</p>
 								<p>
@@ -208,31 +209,32 @@
 									Lamp_min_dist: distance to the nearest streetlight
 								</p>
 								<p>
-									Lamp_density: density of streetlights around the crime incident
+									Lamp_density: density of streetlights 0.01 degrees around the crime incident
 								</p>
 								<p>
 									Police_min_dist: distance to the nearest police station
 								</p>
 								<p>
-									Police_density: density of police stations around the crime incident
+									Police_density: density of police stations 0.01 degrees around the crime incident
 								</p>
 								<p>
 									Hospital_min_dist: distance to the nearest hospital
 								</p>
 								<p>
-									Hospital_density: density of hospitals around the crime incident
+									Hospital_density: density of hospitals 0.01 degrees around the crime incident
 								</p>
 								<p>
 									School_min_dist: distance to the nearest school
 								</p>
 								<p>
-									School_density: density of school around the crime incident
+									School_density: density of school 0.01 degrees around the crime incident
 								</p>
 								<p>
 									Shooting: whether the crime incident was a shooting or not
 								</p>
 								<p>
-									Category: our response variable, density of streetlights around the crime incident
+									Category: our response variable, the category of crime (theft, vandalism, mv accident,
+									violent, burglary, possession weapons, domestic, petty theft, medical, drugs, and civil disruption)
 								</p>
 							</div>
 						</div>
