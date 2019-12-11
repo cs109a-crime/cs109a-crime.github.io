@@ -54,7 +54,8 @@
 									reports to see what sort of emergency responses correlated with different predictors.
 									For example, if we could predict 911 calls that had a high likelihood of involving domestic
 									abuse, then we could make sure to send someone with special training in that field specifically
-									to those calls. Similarly with drug related cases, or cases involving weapons. Through this
+									to those calls. Similarly with drug related cases, or cases involving weapons, specialists who
+									had training in those areas could be more useful for the community's wellbeing than an arrest. Through this
 									analysis, we could supplement police response by helping with effective resource allocation.</p>
 							</header>
 						</div>
@@ -73,15 +74,26 @@
 						<div class="content">
 							<header class="align-left">
 								<h2>RESEARCH QUESTION</h2>
-								<p>In order to gain insights about the above problems, we
+								<p>
+									In order to gain insights about the above problems, we
 									decided to focus on two specific questions which could be explored using
-									data science and statistical analysis.</p>
+									data science and statistical analysis.
+								</p>
+
 								<ol type="1">
 									<li>Given that emergency services have been contacted, and given the time,
 										location, and other predictors listed below, what sort of emergency
 										response will most likely be needed?</li>
 									<li>Which areas or times correlate most with different types of police reports?</li>
 								</ol>
+
+								<p>
+									In order to use the datasets provided to answer these questions, we categorized each crime
+									based on its offence code, and grouped codes together by the type of response they would need.
+									For example, we grouped drug offences together, because they could benefit from a different
+									kind of specialist than cases involving domestic abuse, or from cases of public disturbance.
+								</p>
+
 							</header>
 						</div>
 					</div>
@@ -101,7 +113,8 @@
 						<div class="content">
 							<header class="align-center">
 								<h2>Data Collection</h2>
-								<p>First, we collected our data.</p>
+								<p>To better predict crime types, we looked for additional data that
+									 would help our model differentiate between categories.</p>
 							</header>
 							<hr />
 							<p><a href="https://data.boston.gov/dataset/crime-incident-reports-august-2015-to-date-source-new-system">Crime Incident Reports</a>:
