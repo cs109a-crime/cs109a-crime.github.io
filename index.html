@@ -18,14 +18,11 @@
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="#">Home</a></li>
-					<li><a href="#introduction">Introduction</a></li>
-					<li><a href="#research_question">Research Question</a></li>
-					<li><a href="#data_collection">Data Collection</a></li>
-					<li><a href="#data_cleaning">Data Cleaning</a></li>
-					<li><a href="#eda">Exploratory Data Analysis</a></li>
-					<li><a href="#model_refining">Model Refining</a></li>
-					<li><a href="#final_model">Final Model</a></li>
-					<li><a href="#results">Results</a></li>
+					<li><a href="#problem_statement">Problem Statement and Motivation</a></li>
+					<li><a href="#introduction">Introduction and Description of Data</a></li>
+					<li><a href="#modeling_approach">Modeling Approach</a></li>
+					<li><a href="#results">Project Trajectory, Results, and Interpretation</a></li>
+					<li><a href="#conclusion">Conclusion and Future Work</a></li>
 				</ul>
 			</nav>
 
@@ -33,41 +30,12 @@
 				<div class="inner">
 					<h1>Crime Prediction</h1>
 					<p>by Nicolas Lepore, Natalie Margulies, Daphne Kaxiras, and Wes De Silvestro<br />
-					Hosted by <a href="https://github.com/nlepore33/finalproject">GitHub</a>.</p>
+					Final Project Group 49. Hosted by <a href="https://github.com/nlepore33/finalproject">GitHub</a>.</p>
 					<a href="#question" class="button special scrolly">Explore Our Project</a>
 				</div>
 			</section>
 
-		<section id="introduction" class="wrapper style2">
-			<div class="inner">
-				<div>
-					<div class="box">
-						<div class="image fit">
-							<img src="images/pic01.jpg" alt="" />
-						</div>
-						<div class="content">
-							<header class="align-left">
-								<h2>INTRODUCTION</h2>
-								<p>After the creation of President Obama's 2015 Task Force on 21st Century Policing,
-									many police departments pushed to implement community focused policing tactics.
-									This meant creating a more comprehensive support system for the community, focusing on
-									wholistic public health rather than arrests and convicion numbers. As an extension of this,
-									our team decided to look into Boston Analytic's police report dataset, which included
-									records of all police reports filed from 2015 to 2019. We wanted to analyze police
-									reports to see what sort of emergency responses correlated with different predictors.
-									For example, if we could predict 911 calls that had a high likelihood of involving domestic
-									abuse, then we could make sure to send someone with special training in that field specifically
-									to those calls. Similarly with drug related cases, or cases involving weapons, specialists who
-									had training in those areas could be more useful for the community's wellbeing than an arrest. Through this
-									analysis, we could supplement police response by helping with effective resource allocation.</p>
-							</header>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section id="research_question" class="wrapper style2">
+		<section id="problem_statement" class="wrapper style2">
 			<div class="inner">
 				<div>
 					<div class="box">
@@ -76,7 +44,7 @@
 						<!--						</div>-->
 						<div class="content">
 							<header class="align-left">
-								<h2>RESEARCH QUESTION</h2>
+								<h2>Problem Statement and Motivation</h2>
 								<p>
 									In order to gain insights about the above problems, we
 									decided to focus on two specific questions which could be explored using
@@ -104,22 +72,31 @@
 			</div>
 		</section>
 
-
-		<!-- One -->
-		<section id="data_collection" class="wrapper style2">
+		<section id="introduction" class="wrapper style2">
 			<div class="inner">
 				<div>
 					<div class="box">
 						<div class="image fit">
-							<img src="images/pic02.jpg" alt="" />
+							<img src="images/pic01.jpg" alt="" />
 						</div>
 						<div class="content">
-							<header class="align-center">
-								<h2>Data Collection</h2>
-								<p>To better predict crime types, we looked for additional data that
-									 would help our model differentiate between categories.</p>
+							<header class="align-left">
+								<h2>Introduction and Description of Data</h2>
+								<p>After the creation of President Obama's 2015 Task Force on 21st Century Policing,
+									many police departments pushed to implement community focused policing tactics.
+									This meant creating a more comprehensive support system for the community, focusing on
+									holistic public health rather than arrests and conviction numbers. As an extension of this,
+									our team decided to look into Boston Analytic's police report dataset, which included
+									records of all police reports filed from 2015 to 2019. We wanted to analyze police
+									reports to see what sort of emergency responses correlated with different predictors.
+									For example, if we could predict 911 calls that had a high likelihood of involving domestic
+									abuse, then we could make sure to send someone with special training in that field specifically
+									to those calls. Similarly with drug related cases, or cases involving weapons, specialists who
+									had training in those areas could be more useful for the community's well being than an arrest. Through this
+									analysis, we could supplement police response by helping with effective resource allocation.</p>
 							</header>
 							<hr />
+							<h3>Data Sources</h3>
 							<p><a href="https://data.boston.gov/dataset/crime-incident-reports-august-2015-to-date-source-new-system">Crime Incident Reports</a>:
 								Used as our main data source for the crime incidents.</p>
 							<p><a href="https://data.boston.gov/dataset/property-assessment">Property Assessments</a>:
@@ -130,231 +107,196 @@
 								are around a crime.</p>
 							<p><a href="https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USW00014739/detail">Weather Data</a>:
 								Daily weather data to see what the weather was when the crime was committed.</p>
-                            <p><a href="https://data.boston.gov/dataset/boston-police-stations">Police Stations</a>:
+							<p><a href="https://data.boston.gov/dataset/boston-police-stations">Police Stations</a>:
 								Police station locations to see if a crime happened near or far away from a police station.</p>
-                            <p><a href="https://data.boston.gov/dataset/hospital-locations">Hospital Locations</a>:
+							<p><a href="https://data.boston.gov/dataset/hospital-locations">Hospital Locations</a>:
 								Hospital locations to see if a crime happened near or far away from a hospital.</p>
-                            <p><a href="https://data.boston.gov/dataset/public-schools">Public Schools</a>:
+							<p><a href="https://data.boston.gov/dataset/public-schools">Public Schools</a>:
 								Public school locations to see if a crime happened near or far away from a public school.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+							<hr />
+							<h3>Data Cleaning</h3>
+							<p> 1. Dropped Missing Data: We first dropped rows with a substantial amount of missing data, since these would not help us.</p>
+							<p>
+								2. Sampling: We looked for ways to create a master dataframe with which we could train and test our model.
+								To do this, we had to combine many CSVs by certain indices. The data sets were very large, so we sampled
+								from some of them to make certain processes faster, without giving up the integrity of the data.
+							</p>
+							<p>
+								3. Geocoding: One issue was that the crime reports gave location in terms of longitude and latitude.
+								To combine closest property value with crime, we had to use geocoding, which is the
+								process of converting addresses to longitude and latitude.
+							</p>
+							<p>
+								4. Property: Once the property addresses were converted to longitude and latitude,
+								we then found the closest property value and the average neighborhood property value to a given
+								crime. This was computationally difficult since we needed to test many properties for each crime
+								to achieve this, but once we did it one time, we could save that CSV for future use.
+							</p>
+							<p>
+								5. Min Distance and Density: We followed a similar technique to find how far away the closest streetlight was to the crime.
+								Using the coordinates of the streetlights, we found how far away the closest streetlight was
+								to a crime by converting from coordinate Euclidean distance to a familiar distance metric.
+								We then found the density of streetlights in a radius of 0.01 degrees (in terms of
+								degrees latitude or longitude) from the incident. We did this computation for
+								streetlights, police stations, hospitals, and schools.
+								Again, this was computationally taxing, but only needed to be performed once.
+							</p>
+							<p>
+								6. Weather: We looked at weather for each day in Boston, to see if it affected type of crime.
+								We took the average temperature, precipitation amount, and snow amount to see whether there
+								was a relationship.
+							</p>
+							<p>
+								7. Response: We used these features to predict the crime "category", which we defined as one of
+								burglary, violent, possession of weapons, domestic, and drugs.
+							</p>
 
-		<!-- One -->
-			<section id="data_cleaning" class="wrapper style2">
-				<div class="inner">
-					<div>
-						<div class="box">
-<!--							<div class="image fit">-->
-<!--								<img src="images/pic02.jpg" alt="" />-->
-<!--							</div>-->
-							<div class="content">
-								<header class="align-center">
-									<h2>Data Cleaning</h2>
-									<p>Given the vast amount of data we had collected, we decided to keep only what would be useful for answering our questions.</p>
-								</header>
-								<hr />
-								<p> 1. Dropped Missing Data: We first dropped rows with a substantial amount of missing data, since these would not help us.</p>
-								<p>
-									2. Sampling: We looked for ways to create a master dataframe with which we could train and test our model.
-									To do this, we had to combine many CSVs by certain indices. The data sets were very large, so we sampled
-									from some of them to make certain processes faster, without giving up the integrity of the data.
-								</p>
-								<p>
-									3. Geocoding: One issue was that the crime reports gave location in terms of longitude and latitude.
-									To combine closest property value with crime, we had to use geocoding, which is the
-									process of converting addresses to longitude and latitude.
-								</p>
-								<p>
-									4. Property: Once the property addresses were converted to longitude and latitude,
-									we then found the closest property value and the average neighborhood property value to a given
-									crime. This was computationally difficult since we needed to test many properties for each crime
-									to achieve this, but once we did it one time, we could save that CSV for future use.
-								</p>
-								<p>
-									5. Min Distance and Density: We followed a similar technique to find how far away the closest streetlight was to the crime.
-									Using the coordinates of the streetlights, we found how far away the closest streetlight was
-									to a crime by converting from coordinate Euclidean distance to a familiar distance metric.
-									We then found the density of streetlights in a radius of 0.01 degrees (in terms of
-									degrees latitude or longitude) from the incident. We did this computation for
-									streetlights, police stations, hospitals, and schools.
-									Again, this was computationally taxing, but only needed to be performed once.
-								</p>
-								<p>
-									6. Weather: We looked at weather for each day in Boston, to see if it affected type of crime.
-									We took the average temperature, precipitation amount, and snow amount to see whether there
-									was a relationship.
-								</p>
-								<p>
-									7. Response: We used these features to predict the crime "category", which we defined as one of
-									burglary, violent, possession of weapons, domestic, and drugs.
-								</p>
-
-								<h4>Master Dataset Columns:</h4>
-								<div class="table-wrapper">
-									<table>
-										<thead>
-										<tr>
-											<th>Column</th>
-											<th>Description</th>
-										</tr>
-										</thead>
-										<tbody>
-										<tr>
-											<td>Lat</td>
-											<td>latitude of crime incident</td>
-										</tr>
-										<tr>
-											<td>Long</td>
-											<td>longitude of crime incident</td>
-										</tr>
-										<tr>
-											<td>Month</td>
-											<td>month of crime incident</td>
-										</tr>
-										<tr>
-											<td>Day_of_Week</td>
-											<td>day of the week of crime incident</td>
-										</tr>
-										<tr>
-											<td>Hour</td>
-											<td>hour of the day of crime incident</td>
-										</tr>
-										<tr>
-											<td>TAvg</td>
-											<td>average temperature for the day of crime incident</td>
-										</tr>
-										<tr>
-											<td>Prcp</td>
-											<td>precipitation amount for the day of crime incident</td>
-										</tr>
-										<tr>
-											<td>Snow</td>
-											<td>snow amount for the day of crime incident</td>
-										</tr>
-										<tr>
-											<td>Closest_property_value</td>
-											<td>value of the closest property</td>
-										</tr>
-										<tr>
-											<td>Neighborhood_avg</td>
-											<td>average neighborhood property value</td>
-										</tr>
-										<tr>
-											<td>Lamp_min_dist</td>
-											<td>distance to the nearest streetlight</td>
-										</tr>
-										<tr>
-											<td>Lamp_density</td>
-											<td>density of streetlights 0.01 degrees around the crime incident</td>
-										</tr>
-										<tr>
-											<td>Police_min_dist</td>
-											<td>distance to the nearest police station</td>
-										</tr>
-										<tr>
-											<td>Police_density</td>
-											<td>density of police stations 0.01 degrees around the crime incident</td>
-										</tr>
-										<tr>
-											<td>Hospital_min_dist</td>
-											<td>distance to the nearest hospital</td>
-										</tr>
-										<tr>
-											<td>Hospital_density</td>
-											<td>density of hospitals 0.01 degrees around the crime incident</td>
-										</tr>
-										<tr>
-											<td>School_min_dist</td>
-											<td>distance to the nearest school</td>
-										</tr>
-										<tr>
-											<td>School_density</td>
-											<td>density of school 0.01 degrees around the crime incident</td>
-										</tr>
-										<tr>
-											<td>Shooting</td>
-											<td>whether the crime incident was a shooting or not</td>
-										</tr>
-										<tr>
-											<td>Category</td>
-											<td>our response variable, the category of crime (burglary, violent, possession
-												weapons, domestic, and drugs.)</td>
-										</tr>
-										</tbody>
-									</table>
+							<h4>Master Dataset Columns:</h4>
+							<div class="table-wrapper">
+								<table>
+									<thead>
+									<tr>
+										<th>Column</th>
+										<th>Description</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td>Lat</td>
+										<td>latitude of crime incident</td>
+									</tr>
+									<tr>
+										<td>Long</td>
+										<td>longitude of crime incident</td>
+									</tr>
+									<tr>
+										<td>Month</td>
+										<td>month of crime incident</td>
+									</tr>
+									<tr>
+										<td>Day_of_Week</td>
+										<td>day of the week of crime incident</td>
+									</tr>
+									<tr>
+										<td>Hour</td>
+										<td>hour of the day of crime incident</td>
+									</tr>
+									<tr>
+										<td>TAvg</td>
+										<td>average temperature for the day of crime incident</td>
+									</tr>
+									<tr>
+										<td>Prcp</td>
+										<td>precipitation amount for the day of crime incident</td>
+									</tr>
+									<tr>
+										<td>Snow</td>
+										<td>snow amount for the day of crime incident</td>
+									</tr>
+									<tr>
+										<td>Closest_property_value</td>
+										<td>value of the closest property</td>
+									</tr>
+									<tr>
+										<td>Neighborhood_avg</td>
+										<td>average neighborhood property value</td>
+									</tr>
+									<tr>
+										<td>Lamp_min_dist</td>
+										<td>distance to the nearest streetlight</td>
+									</tr>
+									<tr>
+										<td>Lamp_density</td>
+										<td>density of streetlights 0.01 degrees around the crime incident</td>
+									</tr>
+									<tr>
+										<td>Police_min_dist</td>
+										<td>distance to the nearest police station</td>
+									</tr>
+									<tr>
+										<td>Police_density</td>
+										<td>density of police stations 0.01 degrees around the crime incident</td>
+									</tr>
+									<tr>
+										<td>Hospital_min_dist</td>
+										<td>distance to the nearest hospital</td>
+									</tr>
+									<tr>
+										<td>Hospital_density</td>
+										<td>density of hospitals 0.01 degrees around the crime incident</td>
+									</tr>
+									<tr>
+										<td>School_min_dist</td>
+										<td>distance to the nearest school</td>
+									</tr>
+									<tr>
+										<td>School_density</td>
+										<td>density of school 0.01 degrees around the crime incident</td>
+									</tr>
+									<tr>
+										<td>Shooting</td>
+										<td>whether the crime incident was a shooting or not</td>
+									</tr>
+									<tr>
+										<td>Category</td>
+										<td>our response variable, the category of crime (burglary, violent, possession
+											weapons, domestic, and drugs.)</td>
+									</tr>
+									</tbody>
+								</table>
+								<h3>Exploratory Data Analysis (EDA)</h3>
+								<p>We began our EDA by categorizing crime offense_codes into five different broad categorizations of serious crime: domestic, violent, drugs, burglary, and possession weapons. We chose these five categories for three main reasons.
+								<ol type="1">
+									<li>The specificity of the <i>crime_incidents</i> dataset's offense_code was hindering predictive power with over TODO categories</li>
+									<li> Domestic, violent, drugs, burglary, and possession weapons are the most frequent serious crime groupings</li>
+									<li>These five categories require the most specialized police task training. Specifically, Obama’s Task Force on 21st Century Policing report highlighted specific efforts to include specialization in domestic violence and drug-related law enforcement deployment.</li>
+								</ol>
+								<p>Our EDA analysis explores correlations between location coordinates and amenity availability and crime categories.</p>
+								<p>We first constructed a map plotting locations of crime incidents in Boston, differentiating between the most egregious crimes (i.e., shootings) in red and all other forms of crime in blue. The plot shows us what we might expect: crime incident is correlated with population density. Thus, the more populated areas of Boston in its center sees more crime than the outskirts. </p>
+								<div class="image right">
+									<img src="images/shootings_boston.png" alt="" />
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+								<p>We next explored the relationship between specific crime category and latitude/longitude location data. <i>Public Disturbance</i> crimes are concentrated near public locations such as the Boston Commons and Prudential Center while <i>Domestic Crimes</i> are much more concentrated in downtown, urban Boston areas and <i>Motor Vehicle</i> accidents occur on exclusively on roads.</p>
+								<div class="image left">
+									<img src="images/eda_images/domestic.jpg" alt="" />
+								</div>
+								<div class="image left">
+									<img src="images/eda_images/mv_accidents.jpg" alt="" />
+								</div>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<p>We next explored the correlation between amenity availability (including school, hospital, streetlight, and police-station proximity). Streetlamp are evenly distributed across Boston and add little predictive power. However, density of hospitals, school, and police stations near a crime location appear highly correlated with crime category. TODO: ADD GRAPH </p>
+								<p>The EDA process highlighted different correlations between crime categories and location specifics. We were able to use this analysis to inform how we approach the model-building process as we heavily prioritized hospital-proximity and school-proximity as important predictors.</p>
 
-		<section id="eda" class="wrapper style2">
-			<div class="inner">
-				<div>
-					<div class="box">
-<!--						<div class="image fit">-->
-<!--							<img src="images/pic01.jpg" alt="" />-->
-<!--						</div>-->
-						<div class="content">
-							<header class="align-center">
-								<h2>Exploratory Data Analysis (EDA)</h2>
-								<p>Before modeling, we needed to understand the relationship between crime categories and location data.</p>
-							</header>
-							<p>We began our EDA by categorizing crime offense_codes into five different broad categorizations of serious crime: domestic, violent, drugs, burglary, and possession weapons. We chose these five categories for three main reasons.
-							<ol type="1">
-								<li>The specificity of the <i>crime_incidents</i> dataset's offense_code was hindering predictive power with over TODO categories</li>
-								<li> Domestic, violent, drugs, burglary, and possession weapons are the most frequent serious crime groupings</li>
-								<li>These five categories require the most specialized police task training. Specifically, Obama’s Task Force on 21st Century Policing report highlighted specific efforts to include specialization in domestic violence and drug-related law enforcement deployment.</li>
-							</ol>
-							<p>Our EDA analysis explores correlations between location coordinates and amenity availability and crime categories.</p>
-							<p>We first constructed a map plotting locations of crime incidents in Boston, differentiating between the most egregious crimes (i.e., shootings) in red and all other forms of crime in blue. The plot shows us what we might expect: crime incident is correlated with population density. Thus, the more populated areas of Boston in its center sees more crime than the outskirts. </p>
-							<div class="image right">
-								<img src="images/shootings_boston.png" alt="" />
 							</div>
-							<p>We next explored the relationship between specific crime category and latitude/longitude location data. <i>Public Disturbance</i> crimes are concentrated near public locations such as the Boston Commons and Prudential Center while <i>Domestic Crimes</i> are much more concentrated in downtown, urban Boston areas and <i>Motor Vehicle</i> accidents occur on exclusively on roads.</p>
-							<div class="image left">
-								<img src="images/eda_images/domestic.jpg" alt="" />
-							</div>
-							<div class="image left">
-								<img src="images/eda_images/mv_accidents.jpg" alt="" />
-							</div>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<p>We next explored the correlation between amenity availability (including school, hospital, streetlight, and police-station proximity). Streetlamp are evenly distributed across Boston and add little predictive power. However, density of hospitals, school, and police stations near a crime location appear highly correlated with crime category. TODO: ADD GRAPH </p>
-							<p>The EDA process highlighted different correlations between crime categories and location specifics. We were able to use this analysis to inform how we approach the model-building process as we heavily prioritized hospital-proximity and school-proximity as important predictors.</p>
-						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<section id="model_refining" class="wrapper style2">
+		<section id="modeling_approach" class="wrapper style2">
 			<div class="inner">
 				<div>
 					<div class="box">
-						<!--						<div class="image fit">-->
-						<!--							<img src="images/pic01.jpg" alt="" />-->
-						<!--						</div>-->
+						<div class="image fit">
+							<img src="images/pic02.jpg" alt="" />
+						</div>
 						<div class="content">
 							<header class="align-center">
-								<h2>Model Refining</h2>
-								<p>Measures we took to refine our model.</p>
+								<h2>Modeling Approach</h2>
 							</header>
+							<h2>Model Refining</h2>
 							<p>
 								We tried many approaches to refine our data and our model. To list a few:
 							</p>
@@ -392,25 +334,8 @@
 							<p>
 								TODO
 							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section id="final_model" class="wrapper style2">
-			<div class="inner">
-				<div>
-					<div class="box">
-						<div class="image fit">
-							<img src="images/pic03.jpg" alt="" />
-						</div>
-						<div class="content">
-							<header class="align-center">
-								<h2>Final Model</h2>
-								<p>Our model after all modifications.</p>
-							</header>
 							<hr />
+							<h2>Final Model</h2>
 							<p>
 								<b>A Note About the Baseline Model</b>: to have something to compare to, we looked at what
 								sort of accuracy we would want our model to beat. One way to think of it is the accuracy
@@ -491,7 +416,7 @@
 			</div>
 		</section>
 
-		<section id="conclusion" class="wrapper style2">
+		<section id="results" class="wrapper style2">
 			<div class="inner">
 				<div>
 					<div class="box">
@@ -500,7 +425,25 @@
 						<!--						</div>-->
 						<div class="content">
 							<header class="align-center">
-								<h2>Conclusion</h2>
+								<h2>Project Trajectory, Results, and Interpretation</h2>
+							</header>
+							<hr />
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="conclusion" class="wrapper style2">
+			<div class="inner">
+				<div>
+					<div class="box">
+						<div class="image fit">
+							<img src="images/pic03.jpg" alt="" />
+						</div>
+						<div class="content">
+							<header class="align-center">
+								<h2>Conclusions and Future Work</h2>
 								<p>Wrap up our findings.</p>
 							</header>
 							<hr />
