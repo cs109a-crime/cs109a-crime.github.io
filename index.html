@@ -18,13 +18,10 @@
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="#">Home</a></li>
-					<li><a href="#introduction">Introduction</a></li>
-					<li><a href="#research_question">Research Question</a></li>
-					<li><a href="#data_collection">Data Collection</a></li>
+					<li><a href="#introduction">INTRODUCTION</a></li>
 					<li><a href="#data_cleaning">Data Cleaning</a></li>
 					<li><a href="#eda">Exploratory Data Analysis</a></li>
-					<li><a href="#model_refining">Model Refining</a></li>
-					<li><a href="#final_model">Final Model</a></li>
+					<li><a href="#model_building">Model Building</a></li>
 					<li><a href="#results">Results</a></li>
 				</ul>
 			</nav>
@@ -34,7 +31,7 @@
 					<h1>Crime Prediction</h1>
 					<p>by Nicolas Lepore, Natalie Margulies, Daphne Kaxiras, and Wes De Silvestro<br />
 					Hosted by <a href="https://github.com/nlepore33/finalproject">GitHub</a>.</p>
-					<a href="#question" class="button special scrolly">Explore Our Project</a>
+					<a href="#introduction" class="button special scrolly">Explore Our Project</a>
 				</div>
 			</section>
 
@@ -336,41 +333,33 @@
 						<div class="content">
 							<header class="align-center">
 								<h2>Exploratory Data Analysis (EDA)</h2>
-								<p>Before modeling, we needed to understand the relationship between crime categories and location data.</p>
+								<p>Before modeling, we needed to understand the datasets we were working with, using statistics and graphing.</p>
 							</header>
-							<p>We began our EDA by categorizing crime offense_codes into five different broad categorizations of serious crime: domestic, violent, drugs, burglary, and possession weapons. We chose these five categories for three main reasons.
-							<ol type="1">
-								<li>The specificity of the <i>crime_incidents</i> dataset's offense_code was hindering predictive power with over TODO categories</li>
-								<li> Domestic, violent, drugs, burglary, and possession weapons are the most frequent serious crime groupings</li>
-								<li>These five categories require the most specialized police task training. Specifically, Obama’s Task Force on 21st Century Policing report highlighted specific efforts to include specialization in domestic violence and drug-related law enforcement deployment.</li>
-							</ol>
-							<p>Our EDA analysis explores correlations between location coordinates and amenity availability and crime categories.</p>
-							<p>We first constructed a map plotting locations of crime incidents in Boston, differentiating between the most egregious crimes (i.e., shootings) in red and all other forms of crime in blue. The plot shows us what we might expect: crime incident is correlated with population density. Thus, the more populated areas of Boston in its center sees more crime than the outskirts. </p>
-							<div class="image right">
+							<hr />
+							<div class="image left">
+								<img src="images/streetlamps_boston.png" alt="" />
+							</div>
+
+							<p>As previously mentioned, we're concerned with two types of data to better understand and predict crime: 1) location data and 2) economic data. We began our analysis by looking at location data to better understand the relationship between crime and its location in Boston.</p>
+							<p>We plotted the location of all street lamps in Boston which can be seen in the image to the left. We were interested in seeing if there were any anomalies, such as areas that might have data missing about nearby street lamps. Comparing this image to other maps of Boston that we have seen before, the dataset appears to be comprehensive and the street lamps distributed as we might expect. </p>
+							<p> The street lamps are clearly placed in a grid-like pattern throughout Boston which makes sense given the way urban planners typically construct neighborhoods. We see very few street lights in the top right of the map. This makes sense as this is not residential land but is part of the Boston Logan Airport. We'll want to be careful when analyzing crime in this area as the lack of street lamps might throw off the association we're investigating.</p>
+							<div class="image left">
 								<img src="images/shootings_boston.png" alt="" />
 							</div>
-							<p>We next explored the relationship between specific crime category and latitude/longitude location data. <i>Public Disturbance</i> crimes are concentrated near public locations such as the Boston Commons and Prudential Center while <i>Domestic Crimes</i> are much more concentrated in downtown, urban Boston areas and <i>Motor Vehicle</i> accidents occur on exclusively on roads.</p>
+							<p>Next, we wanted to continue to investigate location data, but specifically through the lens of where crimes are happening in the city. We constructed another map of one of our datasets, this time plotting incidents of crime in Boston. We chose to color code the map to differentiate between the most egregious crimes (i.e., shootings) and all other forms of crime. We've colored non-shootings in blue and shootings in red. We intentionally chose this binary distinction because shootings were the most commonly reported crime in the news, and thus the most interesting/relevant to map.</p>
+							<p>The plot shows us what we might expect: incidents of crime are correlated with population density. Thus, the more populated areas of Boston in its center sees more crime than the outskirts. The shootings appear to be distributed almost entirely in downtown, urban areas of Boston. We also see that there are pockets of areas in the city that experience no crime whatsoever. We investigated each of these to ensure this was not a problem with our plot or the dataset itself. We found that many of these areas are industrial centers or non-residential areas, such as factories or the Boston Logan airport. Thus, it's plausible no crimes took place here or at least they were perhaps reported offsite once not on these premises.</p>
 							<div class="image left">
-								<img src="images/eda_images/domestic.jpg" alt="" />
+								<img src="images/commoncrime.png" alt="" />
 							</div>
+							<p>Our crime incidents dataset features markers for the different types of crime that ocurred. We constructed a bar plot of these categories to the left so we could better understand the types of crime that occur in Boston and the data we have available to work with.</p>
+							<p>As we might expect, the most common type of crime is one that is not a crime at all: police responding to sick/injured individuals after a 911 call is placed. We were surprised to find that arrests of suspects and property damage caused by motor vehicles where the driver left the scene are the next two most common forms of crime. Overall, the majority of crimes are non-violent, such as theft and larceny.</p>
+							<p>The histogram shows that there are quite a few incidents of vandalism that occurred in the City. We're interested in investigating the relationship between vandalism and the presence of street lights, so we having a large sample of these crimes to model off of is very helpful.</p>
 							<div class="image left">
-								<img src="images/eda_images/mv_accidents.jpg" alt="" />
+								<img src="images/propval.png" alt="" />
 							</div>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<p>We next explored the correlation between amenity availability (including school, hospital, streetlight, and police-station proximity). Streetlamp are evenly distributed across Boston and add little predictive power. However, density of hospitals, school, and police stations near a crime location appear highly correlated with crime category. TODO: ADD GRAPH </p>
-							<p>The EDA process highlighted different correlations between crime categories and location specifics. We were able to use this analysis to inform how we approach the model-building process as we heavily prioritized hospital-proximity and school-proximity as important predictors.</p>
+							<p>We performed a variety of other EDA tasks, but the last one we want to share is regarding property values, the second type of data we explored in our analysis. We created a histogram (seen on the left) of property values in Boston to better understand the distribution of property values throughout the city.</p>
+							<p>We find that property values are not distributed normally in Boston. The distribution is right-skewed with many extremely expensive properties pulling the average up, well beyond the mean. The plot also appears to be somewhat bimodal, with a second peak at the lower end of the distribution where a number of lower value properties are recorded. The range overall is quite remarkable: some properties are worth as much as $2 billion. The majority of the values are under $2 million though, which is in line with what we'd expect.</p>
+							<p>Overall, the EDA process was extremely helpful for us in better understanding our data and its limitations. We were able to use this analysis to inform how we approach the model-building process and could then better understand where our models might fail.</p>
 						</div>
 					</div>
 				</div>
@@ -393,15 +382,10 @@
 								We tried many approaches to refine our data and our model. To list a few:
 							</p>
 							<p>
-								1. Implementing Logistic Regression, with and without cross validation. Using Logistic Regression
-								offered a very small increase over the naive accuracy of just predicting the most common category.
-								Even though the model is well suited to categorical data, it was not well suited to reconcile
-								the many features we included, even after being trained for 5 cross validations.
+								1. Implementing Logistic Regression, with and without cross validation.
 							</p>
 							<p>
-								2. Implementing a Decision Tree. Again, even though this model is well suited for categorical
-								data, it didn't provide a substantial boost over the naive. This led us to look into
-								enhanced decision tree techniques, such as bagging, boosting, and random forest.
+								2. Implementing a Decision Tree.
 							</p>
 							<p>
 								3. Implementing a Neural Network. Using 3 dense hidden layers of 100 nodes each, we were
@@ -413,15 +397,9 @@
 								4. Using latitude and longitude for K-Means Clustering to create pseudo neighborhoods, to
 								see if proximity affected the crime.
 							</p>
+
 							<p>
-								5. Using latitude and longitude to find actual Boston neighborhoods, to
-								see if neighborhood affected the crime.
-							</p>
-							<p>
-								6. Attempted to use PCA decomposition, but realized the problem did not need dimension reduction.
-							</p>
-							<p>
-								7. Testing for different maximum depths of a Random Forest.
+								5. Testing for different maximum depths of a Random Forest.
 							</p>
 							<p>
 								TODO
@@ -446,12 +424,15 @@
 							</header>
 							<hr />
 							<p>
-								We decided to use a Random Forest.
+								Given that we tested many different models, as mentionned above and as can be seen in the many different jupyter notebooks in
+								the folder "old_models", we finally chose the Random Forest as the one that had the most hope of succeeding for our purposes.
 							</p>
 							<p>
-								Our naive accuracy by just predicting the most common category, theft, is about 17%.
+								Our goal was to use the model to predict one of the 11 classes we used to divide the data. That way, responders could use it to
+								predict what sort of support would be most useful for a given emergency. These classes are:
 							</p>
 							<p>
+								We first ran a single decision tree with many different depths to get an understanding of .
 								After augmenting our training data with all of our added features, and using a Random Forest
 								of optimal depth 15, we can bring this up to roughly 28% accuracy. Important features
 								include police_min_dist, Lat and Long, school_min_dist, hospital_min_dist, and hour.
