@@ -49,15 +49,15 @@
 								<hr />
 								<p>After the creation of President Obama's 2015 Task Force on 21st Century Policing,
 									 many police departments pushed to implement community focused policing tactics.
-									 This meant creating a more comprehensive support system for the community, focusing on
+									 This meant creating a more comprehensive support system for the community that focused on
 									 holistic public health rather than arrests and conviction numbers. As an extension of this,
 									 our team decided to look into Analyze Boston's police report dataset, which included
 									 records of all police reports filed from 2015 to 2019. We wanted to analyze police
-									 reports to see what sort of emergency responses correlated with different predictors.
+									 reports to see what sort of emergency responses correlated with different location, neighboorhood-attribute, time, and weather predictors.
 									 For example, if we could predict 911 calls that had a high likelihood of involving domestic
-									 abuse, then we could make sure to send someone with special training in that field specifically
-									 to those calls. Similarly with drug related cases, or cases involving weapons, specialists who
-									 had training in those areas could be more useful for the community's well being than an arrest. Through this
+									 abuse, then we could make sure to send someone with special training in domestic abuse cases specifically
+									 to those calls. Similarly with drug related cases, or cases involving weapons, specialists
+									 with training in those areas could be more useful for the community's well being than an arrest. Through this
 									 analysis, we could supplement police response by helping with effective resource allocation.
 								</p>
 							</header>
@@ -93,9 +93,9 @@
 
 								<p>
 									In order to use the datasets provided to answer these questions, we categorized each crime
-									based on its offence code, and grouped codes together by the type of response they would need.
-									For example, we grouped drug offences together, because they could benefit from a different
-									kind of specialist than cases involving domestic abuse, or from cases of public disturbance.
+									based on its offence code and grouped codes together by the type of response they would need.
+									For example, we grouped drug offences together because they could benefit from different
+									kinds of specialist than cases involving domestic abuse or public disturbance.
 								</p>
 
 							</header>
@@ -326,7 +326,7 @@
 								We tried many approaches to refine our data and our model. To list a few:
 							</p>
 							<p>
-								1. Implementing Logistic Regression, with and without cross validation. Using Logistic Regression
+								1. Implementing Logistic Regression with and without cross validation. Using Logistic Regression
 								offered a very small increase over the naive accuracy of just predicting the most common category.
 								Even though the model is well suited to categorical data, it was not well suited to reconcile
 								the many features we included, even after being trained for 5 cross validations.
@@ -334,7 +334,7 @@
 							<p>
 								2. Implementing a Decision Tree. Again, even though this model is well suited for categorical
 								data, it didn't provide a substantial boost over the naive. This led us to look into
-								enhanced decision tree techniques, such as bagging, boosting, and Random Forest.
+								enhanced decision tree techniques such as bagging, boosting, and Random Forest.
 							</p>
 							<p>
 								3. Implementing a Neural Network. Using 3 dense hidden layers of 100 nodes each, we were
@@ -343,15 +343,15 @@
 								accuracies would change dramatically.
 							</p>
 							<p>
-								4. Using latitude and longitude for K-Means Clustering to create pseudo neighborhoods, to
+								4. Using latitude and longitude for K-Means Clustering to create pseudo neighborhoods to
 								see if proximity affected the crime.
 							</p>
 							<p>
-								5. Using latitude and longitude to find actual Boston neighborhoods, to
+								5. Using latitude and longitude to find actual Boston neighborhoods to
 								see if neighborhood affected the crime.
 							</p>
 							<p>
-								6. Attempted to use PCA decomposition, but realized the problem did not need dimension reduction.
+								6. Attempting to use PCA decomposition to identify important variables but realizing the problem did not need dimension reduction.
 							</p>
 							<p>
 								7. Testing for different maximum depths of a Random Forest.
@@ -401,12 +401,14 @@
 								The real model refining happened in the feature engineering and feature selection process.
 
 								<br>
+								<br>
 
 								Due to the nature of the data (crimes are hard to predict, it can hard to differentiate
 								between a crime that involves drugs or not, and the predictors that we chose cannot possibly
 								capture all the variability in the data), we are confident that our model's accuracy could
 								not significantly improve without drastic changes in the data inputs.
 
+								<br>
 								<br>
 
 								That being said, we wanted to create something that could be useful for a real-life situation,
@@ -417,6 +419,7 @@
 								likely involves drugs and weapons possessions", or "this emergency likely involves domestic issues and drugs".
 								This could help responders send different specialists to each situation, making their response more effective.
 
+								<br>
 								<br>
 
 								In order to accomplish this, we used predict_proba and chose the top two predicted classes
