@@ -136,25 +136,25 @@
 								Public school locations to see if a crime happened near or far away from a public school.</p>
 							<hr />
 							<h3>Data Cleaning</h3>
-							<p> 1. <b>Dropped Missing Data</b>: We first dropped rows with a substantial amount of missing data, since these would not help us.</p>
+							<p> 1. Dropped Missing Data: We first dropped rows with a substantial amount of missing data, since these would not help us.</p>
 							<p>
-								2. <b>Sampling</b>: We looked for ways to create a master dataframe with which we could train and test our model.
+								2. Sampling: We looked for ways to create a master dataframe with which we could train and test our model.
 								To do this, we had to combine many CSVs by certain indices. The data sets were very large, so we sampled
 								from some of them to make certain processes faster, without giving up the integrity of the data.
 							</p>
 							<p>
-								3. <b>Geocoding</b>: One issue was that the crime reports gave location in terms of longitude and latitude.
+								3. Geocoding: One issue was that the crime reports gave location in terms of longitude and latitude.
 								To combine closest property value with crime, we had to use geocoding, which is the
 								process of converting addresses to longitude and latitude.
 							</p>
 							<p>
-								4. <b>Property</b>: Once the property addresses were converted to longitude and latitude,
+								4. Property: Once the property addresses were converted to longitude and latitude,
 								we then found the closest property value and the average neighborhood property value to a given
 								crime. This was computationally difficult since we needed to test many properties for each crime
 								to achieve this, but once we did it one time, we could save that CSV for future use.
 							</p>
 							<p>
-								5. <b>Min Distance and Density</b>: We followed a similar technique to find how far away the closest streetlight was to the crime.
+								5. Min Distance and Density: We followed a similar technique to find how far away the closest streetlight was to the crime.
 								Using the coordinates of the streetlights, we found how far away the closest streetlight was
 								to a crime by converting from coordinate Euclidean distance to a familiar distance metric.
 								We then found the density of streetlights in a radius of 0.01 degrees (in terms of
@@ -163,12 +163,12 @@
 								Again, this was computationally taxing, but only needed to be performed once.
 							</p>
 							<p>
-								6. <b>Weather</b>: We looked at weather for each day in Boston, to see if it affected type of crime.
+								6. Weather: We looked at weather for each day in Boston, to see if it affected type of crime.
 								We took the average temperature, precipitation amount, and snow amount to see whether there
 								was a relationship.
 							</p>
 							<p>
-								7. <b>Response</b>: We used these features to predict the crime "category", which we defined as one of
+								7. Response: We used these features to predict the crime "category", which we defined as one of
 								burglary, violent, possession of weapons, domestic, and drugs.
 							</p>
 
@@ -464,17 +464,23 @@
 							<hr />
 							<h3>Project Trajectory</h3>
 							<p>
-								Our project changed dramatically as we decided what we wanted to focus in on.
+								Our project changed dramatically as we decided what we wanted to focus in on. Overall, we knew we wanted to use the
+								data available to create something that would add value to emergency responders. As we tried to get our model to predict
+								what we thought would be most useful for emergency responders to know, we kept hitting walls with the data, and having to
+								change what we were using our model for, in a way that would still be helpful for our overall question. Usually we
+								wouldn't spend a lot of time on what didn't work--following the quote “people don’t go around introducing you to
+								their ex-wives”--but as this is a school assignment, we wanted to document everything we tried (the model's ex-wives) and how we learned from it.
 							</p>
 							<p>
-								First, we wanted to predict whether a certain crime was a shooting or not (0 or 1). After
+								First, we tried to predict whether a certain crime was a shooting or not (0 or 1). After
 								trying a few models, we soon realized that the number of shootings is too low to accurately
 								predict; our model was simply predicting no shooting for every input, and this gave us high
 								accuracy, but no advantage over the naive model of always predicting the most common outcome,
-								which was no shooting.
+								which was no shooting. Even using ROC scores as accuracy, with 1,000 shootings in a 400,000 entry database,
+								we were getting abysmal results.
 							</p>
 							<p>
-								Next, we wanted to predict UCR, the severity of the crime as dictated by the UCR system.
+								Next, we tried to predict UCR, the severity of the crime as dictated by the UCR system.
 								This was difficult for a reason similar to the shooting: Part 3 was the most common UCR,
 								so our models were always predicting that. In addition, locational data did not give us that
 								much of an advantage in predicting UCR, since it was distributed somewhat evenly across
@@ -487,6 +493,7 @@
 								categories of crime, and were making improvements over the naive model. However, our research question
 								made us decide to cut this down to 5 (burglary, violent, possession of weapons, domestic, and drugs),
 								since these could require specialized police units to deal with, and they were the more egregious crimes.
+								This helped us narrow down our research question and produce something that could be helpful in real life.
 							</p>
 							<p>
 								Throughout all of this experimentation, we documented our model attempts, new EDA, and other
@@ -498,7 +505,9 @@
 								over the naive accuracy. If we can predict the top two possibilities of crime with this high
 								of an accuracy, this means we can respond to a crime with the right teams for the job. If
 								police know what kind of crime they are about to see, they can better prepare for it. A violent crime
-								should have a different response than a drug related crime.
+								likely to involve weapons should be treated differently than a domestic abuse case involving children.
+								Using our model, we were able to guess the top two most likely crime types with 75% accuracy. This is
+								a step in the right direction for creating a tool that is useful in real life scenarios and helps with resource allocation.
 							</p>
 						</div>
 					</div>
@@ -522,13 +531,23 @@
 							<p>
 								After a few weeks of attempting to predict crime type, we found that it is much more difficult
 								than we anticipated. Crime is a very random event, and where and when it happens can be anywhere
-								and anytime.
-							</p>
-							<p>
-								That being said, we did find some interesting ways to predict the type of crime given some
+								and anytime. That being said, we did find some interesting ways to predict the type of crime given some
 								preliminary info, and this could be helpful for police responding quickly and effectively.
 								If we can send specialized law enforcement equipped to handle the top two possibilities
 								as far as type of crime, we can better respond to the situation, possibly saving lives.
+							</p>
+							<p>
+								In terms of areas where we wish we could have made more progress, data collection comes to mind first. We
+								did our best to brainstorm every type of data that could predict what type of crime would be likely to
+								occur at that time and location, but most of our predictors were very general (neighborhood specific instead
+								of crime location specific) and thus the model had a hard time differentiating between crimes at similar
+								dates and locations. How do you differentiate between a burglary and a drug deal in a similar location on the
+								same day? The other thing we could have benefited from was just more data...if the dataset had gone back more
+								years, then perhaps we could have analyzed how crime types were changing in a specific area and used that to aid
+								predictions. In addition, information about the 911 call would make the model much better (for example, if the 911
+								call reported a noise disruption in the house next door, then perhaps our model could be trained to predict between
+								burglary and domestic violence, instead of all five categories). All in all, the model performed well, and we learned
+								a lot about feature engineering, and ultimately the model turned out to only be as good as the data we gave it.
 							</p>
 						</div>
 					</div>
