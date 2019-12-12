@@ -2536,16 +2536,19 @@
 	header p {
 		position: relative;
 		margin: 0 0 1.5rem 0;
+		color: black;
 	}
 
 	header h2 + p {
 		font-size: 1.25rem;
 		margin-top: -1rem;
+		color: black;
 	}
 
 	header h3 + p {
 		font-size: 1.1rem;
 		margin-top: -0.8rem;
+		color: black;
 	}
 
 	header h4 + p,
@@ -2553,10 +2556,11 @@
 	header h6 + p {
 		font-size: 0.9rem;
 		margin-top: -0.6rem;
+		color: black;
 	}
 
 	header p {
-		color: #bbb;
+		color: black;
 	}
 
 /* Table */
@@ -3048,7 +3052,7 @@
 			}
 
 			.wrapper.style2 header p {
-				color: #999999;
+				color: black;
 			}
 
 			.wrapper.style2 table tbody tr {
@@ -3277,7 +3281,7 @@
 			}
 
 			.wrapper.style3 header p {
-				color: #999999;
+				color: black;
 			}
 
 			.wrapper.style3 table tbody tr {
