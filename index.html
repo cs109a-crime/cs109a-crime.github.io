@@ -40,17 +40,18 @@
 			<div class="inner">
 				<div>
 					<div class="box">
-						<!--						<div class="image fit">-->
-						<!--							<img src="images/pic01.jpg" alt="" />-->
-						<!--						</div>-->
+						<div class="image fit">
+							<img src="images/nyc.JPG" alt="" />
+						</div>
 						<div class="content">
 							<header class="align-left">
-								<h2>Introduction</h2>
+								<h2>Introduction and Motivation</h2>
+								<hr />
 								<p>After the creation of President Obama's 2015 Task Force on 21st Century Policing,
 									 many police departments pushed to implement community focused policing tactics.
 									 This meant creating a more comprehensive support system for the community, focusing on
 									 holistic public health rather than arrests and conviction numbers. As an extension of this,
-									 our team decided to look into Boston Analytic's police report dataset, which included
+									 our team decided to look into Analyze Boston's police report dataset, which included
 									 records of all police reports filed from 2015 to 2019. We wanted to analyze police
 									 reports to see what sort of emergency responses correlated with different predictors.
 									 For example, if we could predict 911 calls that had a high likelihood of involving domestic
@@ -75,14 +76,15 @@
 						</div>
 						<div class="content">
 							<header class="align-left">
-								<h2>Problem Statement and Motivation</h2>
+								<h2>Problem Statement</h2>
+								<hr />
 								<p>
 									In order to gain insights about the above problems, we
 									decided to focus on two specific questions which could be explored using
 									data science and statistical analysis.
 								</p>
 
-								<ol type="1">
+								<ol style="font-size: 20px" type="1">
 									<li>Given that emergency services have been contacted, and given the time,
 										location, and other predictors listed below, what sort of emergency
 										response will most likely be needed?</li>
@@ -119,10 +121,10 @@
 							<p><a href="https://data.boston.gov/dataset/crime-incident-reports-august-2015-to-date-source-new-system">Crime Incident Reports</a>:
 								Used as our main data source for the crime incidents.</p>
 							<p><a href="https://data.boston.gov/dataset/property-assessment">Property Assessments</a>:
-								Gives us property values, so we can relate location of the crime to economic status of the setting
+								Boston property values, so we can relate location of the crime to economic status of the setting
 								in which it occurred.</p>
 							<p><a href="https://data.boston.gov/dataset/streetlight-locations">Streetlight Locations</a>:
-								Gives us all Boston streetlight locations, so we can see what the closest streetlight or how many streetlights
+								Boston streetlight locations, so we can see what the closest streetlight or how many streetlights
 								are around a crime.</p>
 							<p><a href="https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USW00014739/detail">Weather Data</a>:
 								Daily weather data to see what the weather was when the crime was committed.</p>
@@ -318,6 +320,7 @@
 							<header class="align-center">
 								<h2>Modeling Approach</h2>
 							</header>
+							<hr />
 							<h2>Model Refining</h2>
 							<p>
 								We tried many approaches to refine our data and our model. To list a few:
@@ -331,7 +334,7 @@
 							<p>
 								2. Implementing a Decision Tree. Again, even though this model is well suited for categorical
 								data, it didn't provide a substantial boost over the naive. This led us to look into
-								enhanced decision tree techniques, such as bagging, boosting, and random forest.
+								enhanced decision tree techniques, such as bagging, boosting, and Random Forest.
 							</p>
 							<p>
 								3. Implementing a Neural Network. Using 3 dense hidden layers of 100 nodes each, we were
@@ -394,7 +397,7 @@
 							<p>
 								<b>Analysis</b>: as we can see above, our trained model (~50%) performed better than the
 								baseline model (35%). Although the model itself seems simple (we just trained a simple
-								random forest on our training data), it is in fact the result of many careful decisions.
+								Random Forest on our training data), it is in fact the result of many careful decisions.
 								The real model refining happened in the feature engineering and feature selection process.
 
 								<br>
@@ -531,7 +534,7 @@
 
 					<header class="align-center">
 						<h2>CS109A Final Project</h2>
-						<p>by Nicolas Lepore, Natalie Margulies, Daphne Kaxiras, and Wes De Silvestro
+						<p style="color: white">by Nicolas Lepore, Natalie Margulies, Daphne Kaxiras, and Wes De Silvestro
 						</p>
 					</header>
 
